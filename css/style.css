@@ -9,9 +9,13 @@ html, body {
 }
 
 body {
-	background-color: #3c3c3c;
-	color: white;
-	font-family: "Helvetica Neue", Helvetica;
+	background-color: #eee;
+	font: 300 14px "Helvetica Neue",Helvetica,"Arial Unicode MS",Arial,sans-serif;
+	color: #333;
+	margin: 0;
+	padding: 0;
+	text-rendering: optimizeLegibility
+	font-stretch: condensed;
 }
 
 #canvas {
@@ -25,22 +29,40 @@ body {
 }
 
 #profiles {
-	background-color: #111;
+	padding: 10px;
 	height: 512px;
-	width: 180px;
+	width: 160px;
 	float:left;
 }
 
 #test {
-	background-color: #222;
+	padding: 10px;
 	height: 512px;
-	width: 408px;
+	width: 388px;
 	float:left;
 }
 
 #history {
-	background-color: #333;
+	padding: 10px;
 	height: 512px;
-	width: 180px;
+	width: 160px;
 	float:right;
+}
+
+h1 {
+	font-size: 12px;
+}
+
+p {
+	font-size: 12px;
+}
+
+.modifier .reason {
+	float: left;
+	width: 368px;
+}
+
+.modifier .target {
+	float: right;
+	font-weight: 800;
 }

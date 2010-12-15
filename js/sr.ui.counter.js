@@ -1,4 +1,4 @@
-function draw (r, x, y options) {
+function draw (r, x, y, options) {
 	
 	var x = 243;
 	var y = 14;
