@@ -1,14 +1,14 @@
 function Avatar(paper, options) {
 	this.getOptions = function(options) {
-		var defaultOptions = this.getDefaults()
+		var defaultOptions = this.getDefaults();
 		for (key in defaultOptions) {
 			value = options[key];
 			if (value == undefined) {
 				options[key] = defaultOptions[key];
 			}
-		}
+		};
 		return options;
-	}
+	};
 	this.getDefaults = function() {
 		var defaults = {
 			"x": 0,
@@ -29,7 +29,7 @@ function Avatar(paper, options) {
 			"path": undefined
 		};
 		return defaults;
-	}
+	};
 
 	this.paper = paper;
 	this.options = this.getOptions(options);
@@ -60,8 +60,7 @@ function Avatar(paper, options) {
 		name.attr({
 			"fill": options["textColor"],
 			"text-anchor": "start",
-			"font": options["fontStyle"],
-			
+			"font": options["fontStyle"]
 		});
-	}
-}
+	};
+};

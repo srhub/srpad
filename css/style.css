@@ -24,6 +24,7 @@ body {
 }
 
 #results {
+	border-top:2px solid #5B5B5B;
 	height: 512px;
 	width: 768px;
 }
@@ -36,9 +37,11 @@ body {
 }
 
 #test {
+	border-left:1px solid #5B5B5B;
+	border-right:1px solid #5B5B5B;
 	padding: 10px;
 	height: 512px;
-	width: 388px;
+	width: 384px;
 	float:left;
 }
 
