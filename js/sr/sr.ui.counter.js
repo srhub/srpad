@@ -1,73 +1,73 @@
-function draw (r, x, y, options) {
-	
-	var x = 243;
-	var y = 14;
-	var width = 70;
-	var height = 30;
-	var radius = 3;
-	var backgroundColor = "#666";
-	var outlineColor = "#333";
-	var triangleColor = "#000";
-	var textColor = "#000";
-	var fontStyle = '400 20px "Helvetica Neue", Helvetica, sans-serif';
-	var currentValue = 0;
-	var minimumValue = 0;
-	var maximumValue = 20;
-	
-    var r = Raphael("canvas", 620, 250);
+function Counter(paper, options, properties) {
 
+	this.paper = paper;
+	this.options = options;
 
-    bg = r.rect(x, y, width, height, radius).attr({
-        fill: backgroundColor,
-        stroke: outlineColor
-    });
-    
-	innerBg = r.rect(x + width/4, y, width/2, height, radius).attr({
-        fill: backgroundColor,
-        stroke: outlineColor
-    });
+	this.getDefaultProperties = function() {
+		return {
+			"x": 0,
+			"y": 0,
+			"radius": 3,
+			"outerBoxWidth": 2 * 37,
+			"backgroundColor": "#f6f7f6",
+			"innerBoxWidth": 37,
+			"boxHeight": 33,
+			"fontStyle" : '800 20px "Helvetica Neue", Helvetica',
+			"strokeColor": "#262626",
+			"strokeThickness": 1
+		};
+	};
 
-	text = r.text(x + width/2, y+height/2, currentValue).attr({
-        fill: textColor,
-        stroke: "none",
-        "font": fontStyle
-    });
+	this.getProperties = function(properties) {
+		var defaultProperties = this.getDefaultProperties();
+		for (key in defaultProperties) {
+			value = properties[key];
+			if (value == undefined) {
+				properties[key] = defaultProperties[key];
+			}
+		};
+		return properties;
+	};
 
-	var xOffset = 10;
+	this.properties = this.getProperties(properties);
 
-	left = r.text(x + xOffset, y+height/2, "-").attr({
-        fill: triangleColor,
-        stroke: "none",
-        "font": fontStyle
-    });
+	this.draw = function() {
+		
+		var textStyle = {
+			fill: properties["strokeColor"],
+			stroke: "none",
+			"font": properties["fontStyle"]
+		};
+		
+		var outerBox = paper.rect(
+		properties["x"],
+		properties["y"],
+		properties["outerBoxWidth"],
+		properties["boxHeight"], properties["radius"], properties["radius"]);
+		outerBox.attr({
+			fill: properties["backgroundColor"],
+			"stroke": properties["strokeColor"],
+			"stroke-width": properties["strokeThickness"]
+		});
+		
+		var innerBox = paper.rect(
+		properties["x"] + (properties["outerBoxWidth"] - properties["innerBoxWidth"])/2,
+		properties["y"],
+		properties["innerBoxWidth"],
+		properties["boxHeight"], properties["radius"], properties["radius"]);
+		innerBox.attr({
+			fill: properties["backgroundColor"],
+			"stroke": properties["strokeColor"],
+			"stroke-width": properties["strokeThickness"]
+		});
+		
+		paper.text(properties["x"] + properties["outerBoxWidth"] / 2, properties["y"] + properties["boxHeight"] / 2, "0").attr(textStyle);
 
-	right = r.text(x + width - xOffset , y+height/2, "+").attr({
-        fill: triangleColor,
-        stroke: "none",
-        "font": fontStyle
-    });
+		var xOffset = 10;
+		var yOffset = 2;
+		paper.text(properties["x"] + xOffset, properties["y"] + properties["boxHeight"] / 2 - yOffset, "-").attr(textStyle);
+		paper.text(properties["x"] + properties["outerBoxWidth"] - xOffset, properties["y"] + properties["boxHeight"] / 2 - yOffset, "+").attr(textStyle);
 
-    var animation = function() {
-        if (currentValue == maximumValue+1) {
-            currentValue = maximumValue;
-        }
-        if (currentValue == minimumValue-1) {
-            currentValue = minimumValue;
-        }
+	};
 
-        text.attr({
-            text: currentValue
-        });
-    };
-
-    right.node.onclick = right.node.onclick = function() {
-        currentValue++;
-        animation();
-    };
-
-    left.node.onclick = left.node.onclick = function() {
-        currentValue--;
-        animation();
-    };
-	
-}
+};

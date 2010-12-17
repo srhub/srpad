@@ -14,11 +14,14 @@ body {
 	color: #333;
 	margin: 0;
 	padding: 0;
+	line-height: 1.5;
 	text-rendering: optimizeLegibility
 	font-stretch: condensed;
 }
 
 #canvas {
+	margin: 0;
+	padding: 0;
 	height: 512px;
 	width: 768px;
 }
@@ -62,10 +65,11 @@ p {
 
 .modifier .reason {
 	float: left;
-	width: 368px;
+	width: 330px;
 }
 
 .modifier .target {
+	width: 30px;
 	float: right;
 	font-weight: 800;
 }

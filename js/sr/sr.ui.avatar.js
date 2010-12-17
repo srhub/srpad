@@ -21,7 +21,7 @@ function Avatar(paper, options) {
 			"textColor": "#ccc",
 			"fontStyle": '400 12px "Helvetica Neue", Helvetica, sans-serif',
 			"padding-left": 5,
-			"padding-bottom": 7,
+			"padding-bottom": 9,
 			"boxColor": "#000",
 			"boxOpacity": 0.7,
 			"boxHeight": 20,
@@ -47,8 +47,10 @@ function Avatar(paper, options) {
 			paper.image(options["path"], options["x"] + options["strokeThickness"], options["y"] + options["strokeThickness"], options["width"] - 2 * options["strokeThickness"], options["height"] - 2 * options["strokeThickness"]);
 		}
 		var box = paper.rect(
-		options["x"] + options["strokeThickness"], 
-		options["y"] + options["height"] - options["boxHeight"] - options["strokeThickness"], options["width"] - 2 * options["strokeThickness"], options["boxHeight"] + options["strokeThickness"]);
+		options["x"] + options["strokeThickness"] +1, 
+		options["y"] + options["height"] - options["boxHeight"] - 2*options["strokeThickness"] ,
+		options["width"] - 2 * options["strokeThickness"] -1, 
+		options["boxHeight"] + options["strokeThickness"]);
 		box.attr({
 			"fill": options["boxColor"],
 			"opacity": options["boxOpacity"]
