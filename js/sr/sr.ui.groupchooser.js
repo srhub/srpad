@@ -48,13 +48,14 @@ function GroupChooser(paper, model, properties) {
 
 	this.set = paper.set();
 
+	var groups = properties["groups"];
+	var numberOfGroups = 0;
+	for (key in groups) {
+		numberOfGroups++;
+	}
+	var valuesTitles = this.properties["valueTitles"];
+
 	this.draw = function() {
-		var groups = properties["groups"];
-		var numberOfGroups = 0;
-		for (key in groups) {
-			numberOfGroups++;
-		}
-		var valuesTitles = this.properties["valueTitles"];
 		
 		this.set.push (
 			paper.rect (
@@ -102,9 +103,7 @@ function GroupChooser(paper, model, properties) {
 				var parent = this;
 				(function(text, weaponId, parent) {
 					text.click(function() {
-						console.log("ggnaa" + weaponId);
-						console.log(weaponId);
-						parent.model.select(weaponId);
+						parent.model.selectValue(weaponId);
 						parent.chooser.draw();
 						parent.hide();
 					});
