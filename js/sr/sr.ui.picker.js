@@ -32,16 +32,18 @@ function Picker(paper, model, properties) {
 
 	this.properties = this.getProperties(properties);
 
-	this.draw = function() {
-		var numberOfBoxes = model.size();
-		var valuesPaths = properties["valuePaths"];
-		var transparent = {
-			fill: "#000",
-			opacity: 0
-		};
+	var numberOfBoxes = model.size();
+	var valuesPaths = properties["valuePaths"];
+	var transparent = {
+		fill: "#000",
+		opacity: 0
+	};
 
-		var boxes = new Array();
-		var invisibleBoxes = Array();
+	var boxes = new Array();
+	var invisibleBoxes = Array();
+
+	this.draw = function() {
+		
 		for (i = 0; i < numberOfBoxes; i++) {
 			isFirst = (i == 0);
 			isSelected = (this.model.value == this.model.peek(i));
