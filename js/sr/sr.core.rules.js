@@ -9,6 +9,7 @@ function Rules () {
 	};
 	
 	this.change = function(id, value) {
+		console.log (id + "." + value);
 		this.calculate();
 	};
 	
