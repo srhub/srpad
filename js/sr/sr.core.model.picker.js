@@ -14,8 +14,9 @@ function PickerModel (id, defaultValue, values) {
 		return this.values[key];
 	};
 
-	this.select = function(key) {
-		this.value = this.values[key];
+	this.select = function(value) {
+		// TODO check if values exists
+		this.value = value;
 		this.fireChange();
 	};
 	

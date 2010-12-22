@@ -275,7 +275,68 @@ window.onload = function() {
 	new Slider(paper, sliderProperties, sliderModel).draw();
 	
 	// weapon chooser
-	paper.rect(265, 265, 238, 85, 5);
-	paper.image("resources/weapons/holdout.png", 355, 283, 61, 50);
-
+	var weaponModel = new PickerModel("weapon", "heavy.pistol", new Array("hold-out.pistol","light.pistol","heavy.pistol","smg","taser","shotgun","sporting.rifle","sniper.rifle","assault.rifle","light.machine.gun","medium.machine.gun","heavy.machine.gun","assault.cannon","grenade.launcher","missile.launcher","bow","light.crossbow","medium.crossbow","heavy.crossbow","thrown.knife","shuriken"));
+	rules.register(weaponModel);
+	
+	var valuePaths = {
+		"hold-out.pistol": "resources/weapons/holdout.png",
+		"light.pistol": "resources/weapons/holdout.png",
+		"heavy.pistol": "resources/weapons/holdout.png",
+		"smg": "resources/weapons/holdout.png",
+		"taser": "resources/weapons/holdout.png",
+		"shotgun": "resources/weapons/holdout.png",
+		"sporting.rifle": "resources/weapons/holdout.png",
+		"sniper.rifle": "resources/weapons/holdout.png",
+		"assault.rifle": "resources/weapons/holdout.png",
+		"light.machine.gun": "resources/weapons/holdout.png",
+		"medium.machine.gun": "resources/weapons/holdout.png",
+		"heavy.machine.gun": "resources/weapons/holdout.png",
+		"assault.cannon": "resources/weapons/holdout.png",
+		"grenade.launcher": "resources/weapons/holdout.png",
+		"missile.launcher": "resources/weapons/holdout.png",
+		"bow": "resources/weapons/holdout.png",
+		"light.crossbow": "resources/weapons/holdout.png",
+		"medium.crossbow": "resources/weapons/holdout.png",
+		"heavy.crossbow": "resources/weapons/holdout.png",
+		"thrown.knife": "resources/weapons/holdout.png",
+		"shuriken": "resources/weapons/holdout.png"
+	};
+	var valueTitles = {
+		"hold-out.pistol": "Hold Out Pistol",
+		"light.pistol": "Light Pistol",
+		"heavy.pistol": "Heavy Pistol",
+		"smg": "SMG",
+		"taser": "Taser",
+		"shotgun": "Shotgun",
+		"sporting.rifle": "Sporting Rifle",
+		"sniper.rifle": "Sniper Rifle",
+		"assault.rifle": "Assault Rifle",
+		"light.machine.gun": "Light Machine Gun",
+		"medium.machine.gun": "Medium Machine Gun",
+		"heavy.machine.gun": "Heavy Machine Gun",
+		"assault.cannon": "Assault Cannon",
+		"grenade.launcher": "Grenade Launcher",
+		"missile.launcher": "Missile Launcher",
+		"bow": "Bow",
+		"light.crossbow": "Light Crossbow",
+		"medium.crossbow": "Medium Crossbow",
+		"heavy.crossbow": "Heavy Crossbow",
+		"thrown.knife": "Thrown Knife",
+		"shuriken": "Shuriken"
+	};
+	
+	var groups = {};
+	groups["Firearms"] = new Array("hold-out.pistol","light.pistol","heavy.pistol","smg","taser","shotgun","sporting.rifle","sniper.rifle","assault.rifle");
+	groups["Heavy Weapons"] = new Array("light.machine.gun","medium.machine.gun","heavy.machine.gun","assault.cannon","grenade.launcher","missile.launcher");
+	groups["Impact Projectiles"] = new Array("bow","light.crossbow","medium.crossbow","heavy.crossbow","thrown.knife","shuriken");
+	
+	var weaponChooser = new GroupChooser(paper, weaponModel, {"valueTitles": valueTitles, "groups": groups});
+	
+	var weaponProperties = { 
+		x: 265, y: 265, 
+		"valuePaths": valuePaths, 
+		"valueTitles": valueTitles,
+		"chooser": weaponChooser
+	 };
+	new Chooser(paper, weaponModel, weaponProperties).draw();
 };
