@@ -12,7 +12,7 @@ function Counter(paper, options, properties) {
 			"backgroundColor": "#f6f7f6",
 			"innerBoxWidth": 37,
 			"boxHeight": 33,
-			"fontStyle" : '800 20px "Helvetica Neue", Helvetica',
+			"fontStyle": '800 20px "Helvetica Neue Condensed", "Helvetica Neue", "Helvetica", sans-serif',
 			"strokeColor": "#262626",
 			"strokeThickness": 1
 		};

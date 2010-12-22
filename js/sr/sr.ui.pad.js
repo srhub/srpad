@@ -20,17 +20,20 @@ window.onload = function() {
 
 	// attacker avatar
 	paper.text(20, 50, "ATTACKER").attr(avatarTextAttribute);	
-	var attacker = new Avatar (paper, {x: 20, y: 60, name: "Aquila", path: "resources/avatars/avatar2.jpg"});
-	attacker.draw();
+	var attacker = new Avatar (paper, {x: 20, y: 60, name: "Aquila", path: "resources/avatars/avatar2.jpg"}).draw();
 	
 	// target avatar
 	paper.text(605, 50, "TARGET").attr(avatarTextAttribute);
-	var target = new Avatar (paper, {x: 605, y: 60, name: "NPC", path: "resources/avatars/avatar3.jpg"});
-	target.draw();
+	var target = new Avatar (paper, {x: 605, y: 60, name: "NPC", path: "resources/avatars/avatar3.jpg"}).draw();
+	
+	
+	/********** MODIFIER **********/
+	var rules = new Rules();
 	
 	// thermo modifier
 	paper.text(175, 52, "Thermovision").attr(modifierTextAttribute);
-	thermoOptions = new Options ("thermo", "none", new Array("natural", "cyberware"));
+	thermoModel = new PickerModel ("thermo", "none", new Array("natural", "cyberware"));
+	rules.register(thermoModel);
 	thermoProperties = { 
 		x: 175, y:60,  
 		valuePaths: {
@@ -38,12 +41,12 @@ window.onload = function() {
 			"cyberware": "M 16,8.286 C 8.454,8.286 2.5,16 2.5,16 2.5,16 8.454,23.715 16,23.715 21.771,23.715 29.5,16 29.5,16 29.5,16 21.771,8.286 16,8.286 z m 0,12.521 c -2.649,0 -4.807,-2.156 -4.807,-4.807 0,-2.65 2.158,-4.807 4.807,-4.807 2.648,0 4.807,2.158 4.807,4.807 0,2.648 -2.159,4.807 -4.807,4.807 z m 0,-7.613 c -1.549,0 -2.806,1.256 -2.806,2.806 0,1.55 1.256,2.807 2.806,2.807 1.55,0 2.807,-1.257 2.807,-2.807 0,-1.549 -1.257,-2.806 -2.807,-2.806 z m 9.303912,-11.0687023 0,3 -3,0 0,2 3,0 0,3.0000003 2,0 0,-3.0000003 3,0 0,-2 -3,0 0,-3 z"
 		}
 	 };
-	var thermoWidget = new Picker (paper, thermoOptions, thermoProperties);
-	thermoWidget.draw();
+	new Picker (paper, thermoModel, thermoProperties).draw();
 	
 	// lowlight modifier
 	paper.text(175, 104, "Low Light").attr(modifierTextAttribute);	
-	var lowlightOptions = new Options ("lowlight", "none", new Array("natural", "cyberware"));
+	var lowlightModel = new PickerModel ("lowlight", "none", new Array("natural", "cyberware"));
+	rules.register(lowlightModel);
 	var lowlightProperties = { 
 		x: 175, y:112,  
 		valuePaths: {
@@ -51,24 +54,24 @@ window.onload = function() {
 			"cyberware": "M 16,8.286 C 8.454,8.286 2.5,16 2.5,16 2.5,16 8.454,23.715 16,23.715 21.771,23.715 29.5,16 29.5,16 29.5,16 21.771,8.286 16,8.286 z m 0,12.521 c -2.649,0 -4.807,-2.156 -4.807,-4.807 0,-2.65 2.158,-4.807 4.807,-4.807 2.648,0 4.807,2.158 4.807,4.807 0,2.648 -2.159,4.807 -4.807,4.807 z m 0,-7.613 c -1.549,0 -2.806,1.256 -2.806,2.806 0,1.55 1.256,2.807 2.806,2.807 1.55,0 2.807,-1.257 2.807,-2.807 0,-1.549 -1.257,-2.806 -2.807,-2.806 z m 9.303912,-11.0687023 0,3 -3,0 0,2 3,0 0,3.0000003 2,0 0,-3.0000003 3,0 0,-2 -3,0 0,-3 z"
 		}
 	 };
-	var lowlightWidget = new Picker (paper, lowlightOptions, lowlightProperties);
-	lowlightWidget.draw();
+	new Picker (paper, lowlightModel, lowlightProperties).draw();
 	
 	// blind fire modifier
 	paper.text(175, 155, "Blind Fire").attr(modifierTextAttribute);	
-	var blindOptions = new Options ("blind", "false", new Array("true"));
+	var blindModel = new PickerModel ("blind", "false", new Array("true"));
+	rules.register(blindModel);
 	var blindProperties = { 
 		x: 175, y:163,  
 		valuePaths: {
 			"true": "m 20.645,20.312 c 0,2.761424 -2.238576,5 -5,5 -2.761423,0 -5,-2.238576 -5,-5 0,-2.761423 2.238577,-5 5,-5 2.761424,0 5,2.238577 5,5 z m 9,-9 c 0,2.761424 -2.238576,5 -5,5 -2.761423,0 -5,-2.238576 -5,-5 0,-2.7614235 2.238577,-4.9999997 5,-4.9999997 2.761424,0 5,2.2385762 5,4.9999997 z m -18,0 c 0,2.761424 -2.2385763,5 -5,5 -2.7614238,0 -5,-2.238576 -5,-5 0,-2.7614235 2.2385762,-4.9999997 5,-4.9999997 2.7614237,0 5,2.2385762 5,4.9999997 z"
 		}
 	 };
-	var blindWidget = new Picker (paper, blindOptions, blindProperties);
-	blindWidget.draw();
+	new Picker (paper, blindModel, blindProperties).draw();
 	
 	// smartgun modifier
 	paper.text(175, 206, "Smartgun").attr(modifierTextAttribute);	
-	var smartgunOptions = new Options ("smartgun", "none", new Array("link", "goggles"));
+	var smartgunModel = new PickerModel ("smartgun", "none", new Array("link", "goggles"));
+	rules.register(smartgunModel);
 	var smartgunProperties = { 
 		x: 175, y:214,  
 		valuePaths: {
@@ -76,12 +79,12 @@ window.onload = function() {
 			"goggles": "m 15.731459,14.163989 c 1.193027,0.0324 1.36226,1.196627 1.36226,1.196627 1.311849,5.555855 4.576467,6.820895 8.269568,5.925525 4.072374,-0.987787 3.615087,-6.523238 3.605485,-6.999729 -0.0073,-0.47529 0.169233,-0.488492 0.501694,-0.482492 0.316861,0.0048 0.356469,-0.105623 0.358869,-0.184834 0,-0.07802 0,0.0084 -0.0168,-0.458486 -0.01921,-0.493294 -0.373271,-0.513699 -0.373271,-0.513699 -0.94938,-0.07802 -0.855762,-0.124823 -1.183425,-0.31926 -3.622288,-2.142407 -9.791459,-0.464488 -11.172921,0.908573 -0.283255,-0.130825 -1.36946,-0.181235 -1.36946,-0.181235 0,0 -1.068202,0.05042 -1.351457,0.181235 C 12.975738,11.864352 6.8077691,10.194836 3.1890824,12.340843 2.86022,12.53648 2.9562383,12.582089 2.0056579,12.661304 c 0,0 -0.3540672,0.0204 -0.3720707,0.513698 -0.016803,0.468089 -0.016803,0.380472 -0.016803,0.459686 0.0012,0.07802 0.043208,0.189638 0.358868,0.183636 0.3336634,-0.0048 0.5076964,0.0073 0.5004949,0.482492 -0.0084,0.475289 -0.4548862,6.01194 3.6162863,6.994927 3.6918999,0.890569 6.9577186,-0.379272 8.2611666,-5.937527 0,0.0011 0.182434,-1.227832 1.377861,-1.194227 z"
 		}
 	 };
-	var smartgunWidget = new Picker (paper, smartgunOptions, smartgunProperties);
-	smartgunWidget.draw();
+	new Picker (paper, smartgunModel, smartgunProperties).draw();
 	
 	// light conditions modifier
 	paper.text(445, 52, "Light Conditions").attr(modifierTextAttribute);	
-	var lightOptions = new Options ("light", "normal", new Array("partial", "low", "dark", "glare"));
+	var lightModel = new PickerModel ("light", "normal", new Array("partial", "low", "dark", "glare"));
+	rules.register(lightModel);
 	var lightProperties = { 
 		x: 445, y:60,  
 		valuePaths: {
@@ -91,12 +94,12 @@ window.onload = function() {
 			"glare": "m 15.674,23.793 c -4.411,0 -8,-3.589 -8,-8 0,-4.411 3.588,-8 8,-8 4.412,0 8,3.589 8,8 0,4.411 -3.589,8 -8,8 z m 0,-15 c -3.859,0 -7,3.14 -7,7 0,3.859 3.14,7 7,7 3.86,0 7,-3.141 7,-7 0,-3.86 -3.141,-7 -7,-7 z m 7.5,7 c 0,4.143 -3.357,7.5 -7.5,7.5 -4.142,0 -7.5,-3.357 -7.5,-7.5 0,-4.142 3.358,-7.5 7.5,-7.5 4.142,0 7.5,3.358 7.5,7.5 z m -11.933,8.728 1.848,0.766 -2.047,4.939 -1.848,-0.766 2.047,-4.939 z M 29.902,9.782 30.668,11.63 25.475,13.782 24.709,11.934 29.902,9.782 z M 20.727,1.726 22.575,2.492 20.554,7.368 18.706,6.603 20.727,1.726 z m 4.474,16.858 4.826,1.999 -0.765,1.848 -4.827,-1.999 0.766,-1.848 z m -5.012,5.937 1.988,4.799 -1.848,0.766 -1.988,-4.799 1.848,-0.766 z M 25,15 h 3 v 2 H 25 V 15 z M 25.736,5.189 27.109,6.644 23.682,9.88 22.309,8.426 25.736,5.189 z m -2,16.844 2.369,2.371 -1.414,1.414 -2.369,-2.371 1.414,-1.414 z M 14,26 h 2 v 3 H 14 V 26 z M 5.931,18.17 6.697,20.018 1.502,22.17 0.736,20.322 5.931,18.17 z M 2.44,9.646 6.969,11.523 6.204,13.37 1.675,11.493 2.44,9.646 z M 10.696,0.949 13.064,6.667 11.216,7.433 8.848,1.714 10.696,0.949 z M 2,15 h 4 v 2 H 2 v -2 z m 5.722,7.075 1.373,1.453 -2.438,2.304 -1.373,-1.453 2.438,-2.304 z M 6.713,6.137 9.083,8.507 7.669,9.921 5.298,7.551 6.713,6.137 z M 15,3 h 2 V 6 H 15 V 3 z"
 		}
 	 };
-	var lightWidget = new Picker (paper, lightOptions, lightProperties);
-	lightWidget.draw();
+	new Picker (paper, lightModel, lightProperties).draw();
 	
 	// smoke conditions modifier
 	paper.text(482, 104, "Smoke/Fog").attr(modifierTextAttribute);
-	var smokeOptions = new Options ("smoke", "normal", new Array("partial", "half", "full"));
+	var smokeModel = new PickerModel ("smoke", "normal", new Array("partial", "half", "full"));
+	rules.register(smokeModel);
 	var smokeProperties = { 
 		x: 482, y:112,  
 		valuePaths: {
@@ -105,35 +108,32 @@ window.onload = function() {
 			"full": "m 11.58791,9.0574291 c 0.272673,-0.01473 0.553251,-0.01625 0.812501,0.03125 0.546,0.101 0.96075,0.4385 1.21875,0.9374999 0.12,0.232 0.208,0.478 0.25,0.75 0.041,-0.031 0.06475,-0.0435 0.09375,-0.0625 0.637,-0.428 1.348,-0.4375 2,-0.4375 l 0.1875,0 0.03125,0 c 0.396,0 0.818687,0.08287 1.21875,0.28125 0.400063,0.198375 0.7775,0.51225 1,0.906251 1.022,-0.765001 2.4155,-1.150251 2.4375,-1.156251 1.137,-0.3174997 1.920125,-0.257813 2.46875,0 0.548625,0.257812 0.86275,0.71375 1.03125,1.156251 0.198,0.52 0.29225,1.0055 0.28125,1.4375 0.844,-0.028 1.696,0.13375 2.25,0.46875 0.451,0.2715 0.771,0.699062 0.9375,1.21875 0.1665,0.519687 0.1795,1.1315 0,1.6875 -0.209,0.648 -0.65575,0.985125 -1.15625,1.1875 -0.5005,0.202375 -1.05475,0.27 -1.53125,0.3125 -1.21,0.109 -2.52825,0.08975 -3.78125,-0.03125 0.2625,0.3655 0.517688,0.788937 0.6875,1.21875 0.169812,0.429813 0.25425,0.866 0.15625,1.25 -0.0445,0.173 -0.135625,0.35 -0.3125,0.53125 -0.176875,0.18125 -0.4395,0.36675 -0.8125,0.46875 -0.54,0.14695 -1.082,0.14525 -1.625,0.15625 l -1.125,-0.0625 c -0.752,0.035 -1.52525,-0.03125 -2.28125,-0.03125 -1.303,0 -2.65925,-0.068 -3.90625,-0.375 -0.076,-0.0185 -1.003688,-0.235188 -1.875001,-0.6875 -0.4356553,-0.226156 -0.8633193,-0.527758 -1.1562493,-0.875 -0.29293,-0.347242 -0.4525,-0.742 -0.375,-1.21875 0.017,-0.101 0.05975,-0.18825 0.09375,-0.28125 -0.5615,0.0575 -1.1375,0.05344 -1.6875,-0.0625 -0.55,-0.115937 -1.074,-0.34375 -1.5625,-0.78125 -0.45675,-0.4095 -0.76057,-0.818219 -0.9375,-1.1875 -0.17693,-0.369282 -0.236469,-0.71525 -0.21875,-1.03125 0.03544,-0.632 0.3845,-1.12825 0.6875,-1.46875 0.5145,-0.578 1.138562,-0.9775 1.78125,-1.25 0.642688,-0.2725 1.304,-0.418 1.8125,-0.5 -0.02,-0.630001 0.23375,-1.209251 0.71875,-1.6562507 0.5445,-0.5002502 1.3694833,-0.7995502 2.1874993,-0.8437502 z"
 		}
 	 };
-	var smokeWidget = new Picker (paper, smokeOptions, smokeProperties);
-	smokeWidget.draw();
+	new Picker (paper, smokeModel, smokeProperties).draw();
 	
 	// aiming modifier
 	paper.text(519, 155, "Aiming").attr(modifierTextAttribute);
-	var aimingOptions = new Options ("aimed", "normal", new Array("partial"));
-	var aimingProperties = { 
-		x: 519, y:163
-	 };
-	var aimingWidget = new Counter (paper, aimingOptions, aimingProperties);
-	aimingWidget.draw();
+	var aimingModel = new CounterModel ("aimed", 0, 0, 5);
+	rules.register(aimingModel);
+	new Counter (paper, aimingModel, {x: 519, y:163}).draw();
 	
 	// called shot modifier
 	paper.text(556, 206, "Called").attr(modifierTextAttribute);
-	var calledOptions = new Options ("called", "false", new Array("true"));
+	var calledModel = new PickerModel ("called", "false", new Array("true"));
+	rules.register(calledModel);
 	var calledProperties = { 
 		x: 556, y:214,  
 		valuePaths: {
 			"true": "M 26.482,15.944 C 26.482,10.151 21.791,5.459 16.001,5.457 10.21,5.459 5.517,10.151 5.517,15.943 c 0,5.789 4.693,10.482 10.484,10.482 5.794,0 10.481,-4.949 10.481,-10.481 z M 16.001,22.427 C 12.419,22.419 9.523,19.523 9.517,15.943 9.523,12.361 12.42,9.465 16.001,9.457 c 3.579,0.008 6.478,2.904 6.483,6.486 -0.005,3.579 -2.904,6.476 -6.483,6.484 z M 18,11.109 H 15 V 15 h -3.833 v 2 H 15 v 3.834 h 2 V 17 h 3.771 V 15 H 17 L 16.973,11.109 H 18 z"
 		}
 	 };
-	var calledWidget = new Picker (paper, calledOptions, calledProperties);
-	calledWidget.draw();
+	new Picker (paper, calledModel, calledProperties).draw();
 	
 	/********************************/
 	
 	// attacker movement modifier
 	paper.text(20, 257, "Movement").attr(modifierTextAttribute);	
-	var attackermovementOptions = new Options ("attackermovement", "stationary", new Array("walking", "running"));
+	var attackermovementModel = new PickerModel ("attackermovement", "stationary", new Array("walking", "running"));
+	rules.register(attackermovementModel);
 	var attackermovementProperties = { 
 		x: 20, y:265,  
 		valuePaths: {
@@ -141,33 +141,30 @@ window.onload = function() {
 			"running": "m 19.447,7.459 1.314,0.78 0.682,4.28 4.188,1.412 -0.15,1.702 -5.352,-1.021 -1.26,-2.918 -1.801,3.162 4.375,4.426 -2.867,6.957 -1.8,-0.585 1.699,-5.205 -3.251,-2.724 -2.585,4.134 -6.271,-1.798 0.19,-1.947 5.013,0.925 1.313,-5.107 2.047,-3.844 -2.142,0.099 -0.784,3.988 -1.409,-0.097 0.292,-6.177 7.201,-1.071 1.358,0.629 z m 3.065,-2.333 c 0,-0.518 -0.174,-0.982 -0.529,-1.387 -0.357,-0.404 -0.793,-0.608 -1.316,-0.608 -0.617,0 -1.1,0.204 -1.457,0.608 -0.355,0.405 -0.537,0.869 -0.537,1.387 0,0.519 0.182,0.964 0.537,1.338 0.357,0.372 0.84,0.558 1.457,0.558 0.523,0 0.959,-0.186 1.316,-0.558 0.355,-0.374 0.529,-0.819 0.529,-1.338 z"
 		}
 	 };
-	var attackermovementWidget = new Picker (paper, attackermovementOptions, attackermovementProperties);
-	attackermovementWidget.draw();
+	new Picker (paper, attackermovementModel, attackermovementProperties).draw();
 	
 	// ground modifier
 	paper.text(124, 257, "Ground").attr(modifierTextAttribute);	
-	var groundOptions = new Options ("ground", "normal", new Array("difficult"));
+	var groundModel = new PickerModel ("ground", "normal", new Array("difficult"));
+	rules.register(groundModel);
 	var groundProperties = { 
 		x: 124, y:265,  
 		valuePaths: {
 			"difficult": "M 27.795,12.738 23.474,13.751 18.275,8.282 10.999,16.704 8.278,14.293 4.372,17.754 V 24.25 H 27.795 V 12.738 z"
 		}
 	 };
-	var groundWidget = new Picker (paper, groundOptions, groundProperties);
-	groundWidget.draw();
+	new Picker (paper, groundModel, groundProperties).draw();
 	
 	// melee modifier
 	paper.text(20, 308, "Melee").attr(modifierTextAttribute);
-	var meleeOptions = new Options ("melee", "normal", new Array("difficult"));
-	var meleeProperties = { 
-		x: 20, y:316
-	 };
-	var meleeWidget = new Counter (paper, meleeOptions, meleeProperties);
-	meleeWidget.draw();
+	var meleeModel = new CounterModel ("melee", 0, 0, 5);
+	rules.register(meleeModel);
+	new Counter (paper, meleeModel, {x: 20, y:316}).draw();
 	
 	// wounded modifier
 	paper.text(20, 359, "Wounded").attr(modifierTextAttribute);	
-	var woundedOptions = new Options ("wounded", "uninjured", new Array("light", "moderate", "serious"));
+	var woundedModel = new PickerModel ("wounded", "uninjured", new Array("light", "moderate", "serious"));
+	rules.register(woundedModel);
 	var woundedProperties = { 
 		x: 20, y:367,  
 		valuePaths: {
@@ -176,110 +173,109 @@ window.onload = function() {
 			"serious": "m 12.122991,17.317496 0,0.464 c 0,2.111998 1.024003,3.328 3.632,3.328 2.495998,0 3.968,-1.088002 3.968,-3.504 0,-1.391998 -0.448001,-2.272001 -2.176,-3.024 l -1.776,-0.768 c -0.975999,-0.415999 -1.184,-0.848001 -1.184,-1.552 0,-0.671999 0.272001,-1.328 1.312,-1.328 0.879999,0 1.248,0.624001 1.248,1.696 l 2.208,0 0,-0.32 c 0,-2.191998 -1.488002,-3.0719999 -3.536,-3.0719999 -2.175997,0 -3.536,1.1360019 -3.536,3.3599999 0,1.903998 0.944002,2.752001 2.992,3.456 1.519999,0.528 2.048,0.912001 2.048,1.952 0,0.959999 -0.672,1.408 -1.376,1.408 -1.215998,0 -1.52,-0.688001 -1.52,-1.76 l 0,-0.336 -2.304,0"
 		}
 	 };
-	var woundedWidget = new Picker (paper, woundedOptions, woundedProperties);
-	woundedWidget.draw();
+	new Picker (paper, woundedModel, woundedProperties).draw();
 	
 	/****************************/
 	
 	// recoil compensation modifier
 	paper.text(175, 257, "Recoil Comp").attr(modifierTextAttribute);
-	var recoilcompensationOptions = new Options ("recoilcompensation", "normal", new Array("difficult"));
-	var recoilcompensationProperties = { 
-		x: 175, y:265
-	 };
-	var recoilcompensationWidget = new Counter (paper, recoilcompensationOptions, recoilcompensationProperties);
-	recoilcompensationWidget.draw();
+	var recoilcompensationModel = new CounterModel ("recoilcompensation", 0, 0, 8);
+	rules.register(recoilcompensationModel);
+	new Counter (paper, recoilcompensationModel, {x: 175, y:265}).draw();
 	
 	// gyro modifier
 	paper.text(175, 308, "Gyro Stab").attr(modifierTextAttribute);
-	var gyroOptions = new Options ("gyro", "normal", new Array("difficult"));
-	var gyroProperties = { 
-		x: 175, y:316
-	 };
-	var gyroWidget = new Counter (paper, gyroOptions, gyroProperties);
-	gyroWidget.draw();
+	var gyroModel = new CounterModel ("gyro", 0, 0, 8);
+	rules.register(gyroModel);
+	new Counter (paper, gyroModel, {x: 175, y:316}).draw();
 	
 	// second firearm modifier
 	paper.text(175, 359, "Second Firearm").attr(modifierTextAttribute);	
-	var secondfirearmOptions = new Options ("secondfirearm", "false", new Array("true"));
+	var secondfirearmModel = new PickerModel ("secondfirearm", "false", new Array("true"));
+	rules.register(secondfirearmModel);
 	var secondfirearmProperties = { 
 		x: 175, y:367,  
 		valuePaths: {
 			"true": "m 11.066,11.611 17.696,-0.079 0.195,0.195 v 0.431 h 0.17 v 1.477 h -0.176 v 0.377 l 0.102,0.108 v 0.431 l -0.148,0.115 -0.061,0.652 -0.557,0.557 h -1.592 l -0.133,-0.13 h -0.307 v 0.086 l -4.086,0.136 -0.545,0.531 0.061,1.759 -0.574,0.635 -5.627,0.322 -1.032,2.561 0.128,0.412 -0.963,1.436 0.053,0.035 -0.936,1.551 0.243,0.26 v 0.365 L 8.278,25.713 8.104,25.34 8.448,24.936 V 24.842 H 8.165 V 24.735 L 7.282,24.512 7.019,24.006 10.51,16.653 9,14.422 9.558,11.645 h 0.77 l 0.256,-0.364 H 10.9 l 0.175,0.189 -0.009,0.141 0,0 0,0 z m 6.637,5.963 -0.035,0.445 2.016,-0.039 1.146,-1.724 -0.742,-0.481 -2.164,0.25 -0.221,1.549 0,0 0,0 z m -1.026,-0.64 0.6,1.046 -0.6,-1.046 0,0 0,0 z M 7.154,5.638 22.546,5.569 l 0.17,0.17 v 0.374 h 0.146 V 7.397 H 22.71 v 0.328 l 0.088,0.094 v 0.375 l -0.129,0.1 -0.053,0.569 -0.484,0.483 H 20.745 L 20.632,9.233 h -0.268 v 0.075 l -3.552,0.117 -0.476,0.463 0.053,1.53 -0.498,0.551 -4.896,0.281 -0.896,2.229 0.111,0.357 -0.838,1.249 0.046,0.029 -0.814,1.349 0.211,0.227 v 0.316 L 4.728,17.902 4.577,17.58 4.876,17.226 V 17.144 H 4.629 V 17.05 L 3.861,16.857 3.632,16.418 6.669,10.023 5.357,8.083 5.842,5.667 H 6.511 L 6.734,5.351 h 0.275 l 0.152,0.164 -0.007,0.123 0,0 0,0 z m 5.771,5.188 -0.029,0.387 1.753,-0.035 L 15.645,9.677 15,9.261 l -1.882,0.217 -0.193,1.348 0,0 0,0 z m -0.89,-0.557 0.521,0.909 -0.521,-0.909 0,0 0,0 z	"
 		}
 	 };
-	var secondfirearmWidget = new Picker (paper, secondfirearmOptions, secondfirearmProperties);
-	secondfirearmWidget.draw();
+	new Picker (paper, secondfirearmModel, secondfirearmProperties).draw();
 	
 	/****************************/
 	
 	// image magnification modifier
 	paper.text(519, 257, "Magnification").attr(modifierTextAttribute);
-	var magnificationOptions = new Options ("magnification", "normal", new Array("difficult"));
-	var magnificationProperties = { 
-		x: 519, y:265
-	 };
-	var magnificationWidget = new Counter (paper, magnificationOptions, magnificationProperties);
-	magnificationWidget.draw();
+	var magnificationModel = new CounterModel ("magnification", 0, 0, 3);
+	rules.register(magnificationModel);
+	new Counter (paper, magnificationModel, {x: 519, y:265}).draw();
 
 	// laser sight modifier
 	paper.text(556, 308, "Sight").attr(modifierTextAttribute);	
-	var laserOptions = new Options ("laser", "false", new Array("true"));
+	var laserModel = new PickerModel ("laser", "false", new Array("true"));
+	rules.register(laserModel);
 	var laserProperties = { 
 		x: 556, y:316,  
 		valuePaths: {
 			"true": "m 28.504,16.021 c 0,-0.693 -0.096,-1.321 -0.279,-1.821 -0.186,-0.465 -0.424,-0.96 -1.072,-1.01 l -21.746,-0.038 -2.426,5.665 24.162,0.03 c 0.65,-0.047 0.889,-0.541 1.078,-1.007 0.181,-0.495 0.283,-1.125 0.283,-1.819 z m -9.734,1.812 c 0.201,-0.425 0.336,-1.081 0.336,-1.828 0,-0.745 -0.129,-1.403 -0.328,-1.829 l 8.322,0.013 c 0.045,0.047 0.156,0.21 0.232,0.494 0.105,0.343 0.172,0.816 0.172,1.337 0,0.595 -0.094,1.129 -0.225,1.475 -0.061,0.173 -0.133,0.295 -0.18,0.343 -0.004,0.006 -0.006,0.01 -0.01,0.012 L 18.77,17.833 z"
 		}
 	 };
-	var laserWidget = new Picker (paper, laserOptions, laserProperties);
-	laserWidget.draw();
+	new Picker (paper, laserModel, laserProperties).draw();
 
 	// bullets modifier
 	paper.text(519, 359, "Bullets").attr(modifierTextAttribute);
-	var bulletsOptions = new Options ("bullets", "normal", new Array("difficult"));
-	var bulletsProperties = { 
-		x: 519, y:367
-	 };
-	var bulletsWidget = new Counter (paper, bulletsOptions, bulletsProperties);
-	bulletsWidget.draw();
+	var bulletsModel = new CounterModel ("bullets", 1, 1, 15);
+	rules.register(bulletsModel);
+	new Counter (paper, bulletsModel, {x: 519, y:367}).draw();
 
 	/****************************/
 
 	// target movement modifier
 	paper.text(605, 257, "Movement").attr(modifierTextAttribute);	
-	var targetmovementOptions = new Options ("targetmovement", "stationary", new Array("moving"));
+	var targetmovementModel = new PickerModel ("targetmovement", "stationary", new Array("moving"));
+	rules.register(targetmovementModel);
 	var targetmovementProperties = { 
 		x: 605, y:265,  
 		valuePaths: {
 			"moving": "m 18.894,4.9770002 c 0,1.0195177 -0.826482,1.846 -1.846,1.846 -1.019517,0 -1.846,-0.8264823 -1.846,-1.846 0,-1.0195176 0.826483,-1.8459999 1.846,-1.8459999 1.019518,0 1.846,0.8264823 1.846,1.8459999 z m -1.23455,2.4774502 2.383,1.132 1.574,3.2479996 -1.334,3.182 -1.63,-0.246 1.412501,-2.71 -2.302916,-2.3910876 -1.745585,5.2820876 1.775,5.056 0.186,5.578 -1.706,-0.553 -0.377,-4.213 -1.722,-4.097 -1.805,4.726 -3.4739996,4.137 -1.084,-1.469 3.4329996,-4.607 0.815,-5.657 2.245169,-4.6960037 -2.832169,0.9180037 -0.698244,2.854418 -1.0712506,-0.566 0.8514946,-3.2704176 4.305,-1.838 z"
 		}
 	 };
-	var targetmovementWidget = new Picker (paper, targetmovementOptions, targetmovementProperties);
-	targetmovementWidget.draw();
+	new Picker (paper, targetmovementModel, targetmovementProperties).draw();
 	
 	// cover modifier
 	paper.text(605, 308, "Cover").attr(modifierTextAttribute);	
-	var coverOptions = new Options ("cover", "false", new Array("true"));
+	var coverModel = new PickerModel ("cover", "false", new Array("true"));
+	rules.register(coverModel);
 	var coverProperties = { 
 		x: 605, y:316,  
 		valuePaths: {
 			"true": "m 13.155,10.179 2.141,-0.099 -1.11,2.085 4.777,0 0.315,-1.397 0.816,1.368 1.66,0.029 -0.626,-3.933 -1.315,-0.779 -1.357,-0.631 -7.201,1.071 -0.203,4.272 1.713,0 z M 21.272,7.71 c 0.523,0 0.959,-0.186 1.316,-0.558 0.355,-0.375 0.529,-0.819 0.529,-1.338 0,-0.518 -0.174,-0.982 -0.529,-1.387 -0.357,-0.404 -0.793,-0.608 -1.316,-0.608 -0.617,0 -1.1,0.204 -1.457,0.608 -0.355,0.405 -0.537,0.869 -0.537,1.387 0,0.519 0.182,0.964 0.537,1.338 0.358,0.372 0.84,0.558 1.457,0.558 z m 5.362001,13.785001 7.062,0 0,3.383 -7.062,0 z M -1.383,21.493 l 8.3830004,0 0,3.383 -8.3830004,0 z m 3.4250001,4.153 8.3819999,0 0,3.383 -8.3819999,0 z m 19.7399999,0 8.383,0 0,3.383 -8.383,0 z m -10.129,0 8.380999,0 0,3.383 -8.380999,0 z m 5.431999,-4.153 8.381,0 0,3.383 -8.381,0 z m -9.3829989,0 8.3830009,0 0,3.383 -8.3830009,0 z m 18.4810009,-8.421 7.061999,0 0,3.382999 -7.061999,0 z M -1.834,13.071 l 8.3830004,0 0,3.383 -8.3830004,0 z m 3.425,4.153001 8.3819999,0 0,3.383 -8.3819999,0 z m 19.739999,0 8.383001,0 0,3.383 -8.383001,0 z m -10.129999,0 8.382,0 0,3.383 -8.382,0 z m 5.431999,-4.152001 8.382,0 0,3.382 -8.382,0 z m -9.382999,0 8.382,0 0,3.382 -8.382,0 z"
 		}
 	 };
-	var coverWidget = new Picker (paper, coverOptions, coverProperties);
-	coverWidget.draw();
+	new Picker (paper, coverModel, coverProperties).draw();
 	
 	// bullets modifier
 	paper.text(605, 359, "Targets").attr(modifierTextAttribute);
-	var targetsOptions = new Options ("targets", "normal", new Array("difficult"));
-	var targetsProperties = { 
-		x: 605, y:367
-	 };
-	var targetsWidget = new Counter (paper, targetsOptions, targetsProperties);
-	targetsWidget.draw();
+	var targetsModel = new CounterModel ("targets", 0, 0, 3);
+	rules.register(targetsModel);
+	new Counter (paper, targetsModel, {x: 605, y:367}).draw();
 	
 	/****************************/
 	
-	paper.image("resources/weapons/gun.png", 280, 280, 225, 93);
+	// range slider
+	var sliderProperties = {
+		x: 280, 
+		y: 180,
+		width: 200,
+		minimumValue: 0,
+		maximumValue: 120,
+		stops: new Array(0, 50, 70, 100)
+	};
+	var sliderModel = new SliderModel("slider", 4, 0, 200, 5, new Array (10, 50, 80));
+	rules.register(sliderModel);
+	new Slider(paper, sliderProperties, sliderModel).draw();
+	
+	// weapon chooser
+	paper.rect(265, 265, 238, 85, 5);
+	paper.image("resources/weapons/holdout.png", 355, 283, 61, 50);
 
 };

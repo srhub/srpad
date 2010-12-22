@@ -1,9 +1,10 @@
-function Options (id, defaultValue, values, preSelected) {
-	
+function PickerModel (id, defaultValue, values) {
+
 	this.id = id;
 	this.defaultValue = defaultValue;
-	this.value = (typeof preSelected === "undefined") ? defaultValue :values[preSelected];
 	this.values = values;
+	
+	this.value = this.defaultValue;
 
 	this.size = function() {
 		return this.values.length;
@@ -15,10 +16,21 @@ function Options (id, defaultValue, values, preSelected) {
 
 	this.select = function(key) {
 		this.value = this.values[key];
+		this.fireChange();
 	};
 	
 	this.deselect = function() {
 		this.value = this.defaultValue;
+		this.fireChange();
 	};
-
+	
+	/* every model need these functions */
+	
+	this.register= function(rules) {
+		this.rules = rules;
+	};
+	
+	this.fireChange = function () {
+		this.rules.change(this.id, this.value);
+	};
 };

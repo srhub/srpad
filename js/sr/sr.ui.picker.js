@@ -1,7 +1,7 @@
-function Picker(paper, options, properties) {
+function Picker(paper, model, properties) {
 
 	this.paper = paper;
-	this.options = options;
+	this.model = model;
 
 	this.getDefaultProperties = function() {
 		return {
@@ -33,7 +33,7 @@ function Picker(paper, options, properties) {
 	this.properties = this.getProperties(properties);
 
 	this.draw = function() {
-		var numberOfBoxes = options.size();
+		var numberOfBoxes = model.size();
 		var valuesPaths = properties["valuePaths"];
 		var transparent = {
 			fill: "#000",
@@ -43,7 +43,7 @@ function Picker(paper, options, properties) {
 		var boxes = new Array();
 		for (i = 0; i < numberOfBoxes; i++) {
 			isFirst = (i == 0);
-			isSelected = (this.options.value == this.options.peek(i));
+			isSelected = (this.model.value == this.model.peek(i));
 			isLast = (i == numberOfBoxes - 1);
 
 			tlRadius = isFirst ? properties["radius"] : 0;
@@ -60,18 +60,20 @@ function Picker(paper, options, properties) {
 			});
 
 			var iconCanvas = Raphael(properties["x"] + i * properties["boxWidth"] + (properties["boxWidth"] - 32) / 2, properties["y"] + (properties["boxHeight"] - 32) / 2, 32, 32);
-			var path = iconCanvas.path(properties["valuePaths"][this.options.peek(i)]);
-			path.attr({
+			var path = iconCanvas.path(properties["valuePaths"][this.model.peek(i)]).attr({
 				fill: isSelected ? properties["notSelectedBoxColor"] : properties["selectedBoxColor"],
 				stroke: isSelected ? properties["notSelectedBoxColor"] : properties["selectedBoxColor"]
 			});
-			(function(box) {
+			
+			(function(box, i) {
 				iconCanvas.rect(0, 0, 32, 32).attr(transparent).click(function() {
+					
+					model.select(i);
 					box.attr({
 						fill: "#585858"
 					});
 				});
-			})(box);
+			})(box, i);
 		}
 
 	};
