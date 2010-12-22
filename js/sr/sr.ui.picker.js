@@ -41,6 +41,7 @@ function Picker(paper, model, properties) {
 		};
 
 		var boxes = new Array();
+		var invisibleBoxes = Array();
 		for (i = 0; i < numberOfBoxes; i++) {
 			isFirst = (i == 0);
 			isSelected = (this.model.value == this.model.peek(i));
@@ -60,15 +61,27 @@ function Picker(paper, model, properties) {
 					"stroke": properties["strokeColor"],
 					"stroke-width": properties["strokeThickness"]
 			});
-
-			var iconCanvas = Raphael(properties["x"] + i * properties["boxWidth"] + (properties["boxWidth"] - 32) / 2, properties["y"] + (properties["boxHeight"] - 32) / 2, 32, 32);
-			var path = iconCanvas.path(properties["valuePaths"][this.model.peek(i)]).attr({
+			
+			var path = paper.path(properties["valuePaths"][this.model.peek(i)]).attr({
 				fill: properties["strokeColor"],
 				stroke: properties["strokeColor"]
 			});
 			
-			(function(boxes, numberOfBoxes, i) {
-				iconCanvas.rect(0, 0, 32, 32).attr(transparent).click(function() {
+			path.translate(
+				properties["x"] + i * properties["boxWidth"] + (properties["boxWidth"] - 32) / 2,
+				properties["y"] + (properties["boxHeight"] - 32) / 2
+			);
+			
+			invisibleBoxes[i] = paper.roundedRect(
+				properties["x"] + i * properties["boxWidth"],
+			 	properties["y"], 
+				properties["boxWidth"], 
+				properties["boxHeight"], tlRadius, trRadius, brRadius, blRadius).attr(
+					transparent
+				);
+			
+			(function(boxes, invisibleBoxes, numberOfBoxes, i) {
+				invisibleBoxes[i].click(function() {
 					if (model.value == model.peek(i)) {
 						model.deselect();
 						boxes[i].attr({
@@ -89,7 +102,7 @@ function Picker(paper, model, properties) {
 						model.select(i);	
 					};
 				});
-			})(boxes, numberOfBoxes, i);
+			})(boxes, invisibleBoxes, numberOfBoxes, i);
 		}
 
 	};
