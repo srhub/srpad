@@ -14,7 +14,7 @@ function Picker(paper, model, properties) {
 			"strokeColor": "#262626",
 			"strokeThickness": 1,
 			"shadowRadiusDisposition": 1,
-			"selectedBoxColor": "#262626",
+			"selectedBoxColor": "#585858",
 			"notSelectedBoxColor": "#f6f7f6"
 		};
 	};
@@ -51,29 +51,45 @@ function Picker(paper, model, properties) {
 			brRadius = isLast ? properties["radius"] : 0;
 			blRadius = isFirst ? properties["radius"] : 0;
 
-			var box = paper.roundedRect(
-			properties["x"] + i * properties["boxWidth"], properties["y"], properties["boxWidth"], properties["boxHeight"], tlRadius, trRadius, brRadius, blRadius);
-			box.attr({
-				fill: isSelected ? properties["selectedBoxColor"] : properties["notSelectedBoxColor"],
-				"stroke": properties["strokeColor"],
-				"stroke-width": properties["strokeThickness"]
+			boxes[i] = paper.roundedRect(
+				properties["x"] + i * properties["boxWidth"],
+			 	properties["y"], 
+				properties["boxWidth"], 
+				properties["boxHeight"], tlRadius, trRadius, brRadius, blRadius).attr({
+					fill: isSelected ? properties["selectedBoxColor"] : properties["notSelectedBoxColor"],
+					"stroke": properties["strokeColor"],
+					"stroke-width": properties["strokeThickness"]
 			});
 
 			var iconCanvas = Raphael(properties["x"] + i * properties["boxWidth"] + (properties["boxWidth"] - 32) / 2, properties["y"] + (properties["boxHeight"] - 32) / 2, 32, 32);
 			var path = iconCanvas.path(properties["valuePaths"][this.model.peek(i)]).attr({
-				fill: isSelected ? properties["notSelectedBoxColor"] : properties["selectedBoxColor"],
-				stroke: isSelected ? properties["notSelectedBoxColor"] : properties["selectedBoxColor"]
+				fill: properties["strokeColor"],
+				stroke: properties["strokeColor"]
 			});
 			
-			(function(box, i) {
+			(function(boxes, numberOfBoxes, i) {
 				iconCanvas.rect(0, 0, 32, 32).attr(transparent).click(function() {
-					
-					model.select(i);
-					box.attr({
-						fill: "#585858"
-					});
+					if (model.value == model.peek(i)) {
+						model.deselect();
+						boxes[i].attr({
+							fill: properties["notSelectedBoxColor"]
+						});
+					} else {
+						for (j = 0; j < numberOfBoxes; j++) {
+							if (j == i) {
+								boxes[j].attr({
+									fill: properties["selectedBoxColor"]
+								});
+							} else {
+								boxes[j].attr({
+									fill: properties["notSelectedBoxColor"]
+								});
+							}		
+						}
+						model.select(i);	
+					};
 				});
-			})(box, i);
+			})(boxes, numberOfBoxes, i);
 		}
 
 	};
