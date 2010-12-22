@@ -3,20 +3,20 @@ function CounterModel (id, defaultValue, minValue, maxValue) {
 	this.id = id;
 	this.defaultValue = defaultValue;
 	this.minValue = minValue;
-	this.maxValue = minValue;
+	this.maxValue = maxValue;
 	
 	this.value = defaultValue;
 
 	this.next = function() {
 		if (this.value < this.maxValue) {
-			value++;
+			this.value++;
 			this.fireChange();
 		};	
 	};
 	
 	this.previous = function() {
 		if (this.value > this.minValue) {
-			value--;
+			this.value--;
 			this.fireChange();
 		};
 	};

@@ -1,7 +1,7 @@
-function Counter(paper, options, properties) {
+function Counter(paper, model, properties) {
 
 	this.paper = paper;
-	this.options = options;
+	this.model = model;
 
 	this.getDefaultProperties = function() {
 		return {
@@ -14,7 +14,9 @@ function Counter(paper, options, properties) {
 			"boxHeight": 33,
 			"fontStyle": '800 20px "Helvetica Neue Condensed", "Helvetica Neue", "Helvetica", sans-serif',
 			"strokeColor": "#262626",
-			"strokeThickness": 1
+			"strokeThickness": 1,
+			"xOffset": 10,
+			"yOffset": 2
 		};
 	};
 
@@ -31,14 +33,18 @@ function Counter(paper, options, properties) {
 
 	this.properties = this.getProperties(properties);
 
+	var transparent = {
+		fill: "#000",
+		opacity: 0
+	};
+
+	var textStyle = {
+		fill: properties["strokeColor"],
+		stroke: "none",
+		"font": properties["fontStyle"]
+	};
+	
 	this.draw = function() {
-		
-		var textStyle = {
-			fill: properties["strokeColor"],
-			stroke: "none",
-			"font": properties["fontStyle"]
-		};
-		
 		var outerBox = paper.rect(
 		properties["x"],
 		properties["y"],
@@ -61,12 +67,32 @@ function Counter(paper, options, properties) {
 			"stroke-width": properties["strokeThickness"]
 		});
 		
-		paper.text(properties["x"] + properties["outerBoxWidth"] / 2, properties["y"] + properties["boxHeight"] / 2, "0").attr(textStyle);
+		var value = paper.text(properties["x"] + properties["outerBoxWidth"] / 2, properties["y"] + properties["boxHeight"] / 2, this.model.value).attr(textStyle);
+		paper.text(properties["x"] + properties["xOffset"], properties["y"] + properties["boxHeight"] / 2 - properties["yOffset"], "-").attr(textStyle);
+		paper.text(properties["x"] + properties["outerBoxWidth"] - properties["xOffset"], properties["y"] + properties["boxHeight"] / 2 - properties["yOffset"], "+").attr(textStyle);
 
-		var xOffset = 10;
-		var yOffset = 2;
-		paper.text(properties["x"] + xOffset, properties["y"] + properties["boxHeight"] / 2 - yOffset, "-").attr(textStyle);
-		paper.text(properties["x"] + properties["outerBoxWidth"] - xOffset, properties["y"] + properties["boxHeight"] / 2 - yOffset, "+").attr(textStyle);
+		var leftInvisibleBox = paper.rect(
+			properties["x"],
+			properties["y"],
+			properties["outerBoxWidth"] / 2,
+			properties["boxHeight"]
+			).attr(transparent);
+		var rightInvisibleBox = paper.rect(
+			properties["x"] + properties["outerBoxWidth"] / 2,
+			properties["y"],
+			properties["outerBoxWidth"] / 2,
+			properties["boxHeight"]
+			).attr(transparent);
+			
+		leftInvisibleBox.click(function() {
+			model.previous();
+			value.attr ({"text" : model.value})
+		});
+		
+		rightInvisibleBox.click(function() {
+			model.next();
+			value.attr ({"text" : model.value})
+		});
 
 	};
 
