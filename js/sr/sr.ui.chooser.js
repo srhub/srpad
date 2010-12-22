@@ -41,29 +41,16 @@ function Chooser(paper, model, properties) {
 
 	this.properties = this.getProperties(properties);
 
+	var groupChooser = properties["chooser"];
+	groupChooser.draw();
+	groupChooser.hide();
+	groupChooser.chooser = this;
+
 	this.draw = function() {
 		var numberOfBoxes = model.size();
 		var valuesPaths = this.properties["valuePaths"];
 		
-		var upperValues = new Array();
-		var selectedValue = undefined;
-		var bottomValues = new Array();
-		console.log(model);
-		for (key in this.model.values) {
-			value = this.model.peek(key);
-			if (this.model.value == value) {
-				selectedValue = value;
-				continue;	
-			}
-			
-			if (selectedValue === undefined) {
-				upperValues.push(value);
-			} else {
-				bottomValues.push(value);
-			};
-		}
-		var upperValuesLength = upperValues.length;
-		var bottomValuesLength = bottomValues.length;
+		var selectedValue = this.model.value;
 		
 		var selectedBox = paper.rect(
 			properties["x"],
@@ -94,12 +81,6 @@ function Chooser(paper, model, properties) {
 			font: properties["fontStyle"],
 			"fill": properties["textColor"]
 		});
-		
-		
-		var groupChooser = properties["chooser"];
-		groupChooser.draw();
-		groupChooser.hide();
-		groupChooser.chooser = this;
 		
 		weapon.click(function (event) {
 		    toggleOptions();
