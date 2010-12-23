@@ -56,7 +56,7 @@ function GroupChooser(paper, model, properties) {
 	var valuesTitles = this.properties["valueTitles"];
 
 	this.draw = function() {
-		
+
 		this.set.push (
 			paper.rect (
 			properties["x"],
@@ -81,7 +81,7 @@ function GroupChooser(paper, model, properties) {
 					"text-anchor": "start",
 					font: properties["headerStyle"],
 					"fill": properties["textColor"]
-				})	
+				})
 			);
 			// options for each group
 			var options = groups[key];
@@ -108,11 +108,11 @@ function GroupChooser(paper, model, properties) {
 						parent.hide();
 					});
 				})(text, weaponId, parent);
-				
+
 			}
 			i++;
 		}
-		
-				
+
+
 	};
 };

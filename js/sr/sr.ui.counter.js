@@ -43,7 +43,7 @@ function Counter(paper, model, properties) {
 		stroke: "none",
 		"font": properties["fontStyle"]
 	};
-	
+
 	this.draw = function() {
 		var outerBox = paper.rect(
 		properties["x"],
@@ -55,7 +55,7 @@ function Counter(paper, model, properties) {
 			"stroke": properties["strokeColor"],
 			"stroke-width": properties["strokeThickness"]
 		});
-		
+
 		var innerBox = paper.rect(
 		properties["x"] + (properties["outerBoxWidth"] - properties["innerBoxWidth"])/2,
 		properties["y"],
@@ -66,7 +66,7 @@ function Counter(paper, model, properties) {
 			"stroke": properties["strokeColor"],
 			"stroke-width": properties["strokeThickness"]
 		});
-		
+
 		var value = paper.text(properties["x"] + properties["outerBoxWidth"] / 2, properties["y"] + properties["boxHeight"] / 2, this.model.value).attr(textStyle);
 		paper.text(properties["x"] + properties["xOffset"], properties["y"] + properties["boxHeight"] / 2 - properties["yOffset"], "-").attr(textStyle);
 		paper.text(properties["x"] + properties["outerBoxWidth"] - properties["xOffset"], properties["y"] + properties["boxHeight"] / 2 - properties["yOffset"], "+").attr(textStyle);
@@ -83,12 +83,12 @@ function Counter(paper, model, properties) {
 			properties["outerBoxWidth"] / 2,
 			properties["boxHeight"]
 			).attr(transparent);
-			
+
 		leftInvisibleBox.click(function() {
 			model.previous();
 			value.attr ({"text" : model.value})
 		});
-		
+
 		rightInvisibleBox.click(function() {
 			model.next();
 			value.attr ({"text" : model.value})

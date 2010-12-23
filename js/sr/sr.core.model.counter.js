@@ -13,7 +13,7 @@ function CounterModel (id, defaultValue, minValue, maxValue) {
 			this.fireChange();
 		};	
 	};
-	
+
 	this.previous = function() {
 		if (this.value > this.minValue) {
 			this.value--;

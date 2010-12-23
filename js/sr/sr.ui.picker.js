@@ -43,7 +43,7 @@ function Picker(paper, model, properties) {
 	var invisibleBoxes = Array();
 
 	this.draw = function() {
-		
+
 		for (i = 0; i < numberOfBoxes; i++) {
 			isFirst = (i == 0);
 			isSelected = (this.model.value == this.model.peek(i));
@@ -56,32 +56,32 @@ function Picker(paper, model, properties) {
 
 			boxes[i] = paper.roundedRect(
 				properties["x"] + i * properties["boxWidth"],
-			 	properties["y"], 
-				properties["boxWidth"], 
+			 	properties["y"],
+				properties["boxWidth"],
 				properties["boxHeight"], tlRadius, trRadius, brRadius, blRadius).attr({
 					fill: isSelected ? properties["selectedBoxColor"] : properties["notSelectedBoxColor"],
 					"stroke": properties["strokeColor"],
 					"stroke-width": properties["strokeThickness"]
 			});
-			
+
 			var path = paper.path(properties["valuePaths"][this.model.peek(i)]).attr({
 				fill: properties["strokeColor"],
 				stroke: properties["strokeColor"]
 			});
-			
+
 			path.translate(
 				properties["x"] + i * properties["boxWidth"] + (properties["boxWidth"] - 32) / 2,
 				properties["y"] + (properties["boxHeight"] - 32) / 2
 			);
-			
+
 			invisibleBoxes[i] = paper.roundedRect(
 				properties["x"] + i * properties["boxWidth"],
-			 	properties["y"], 
-				properties["boxWidth"], 
+			 	properties["y"],
+				properties["boxWidth"],
 				properties["boxHeight"], tlRadius, trRadius, brRadius, blRadius).attr(
 					transparent
 				);
-			
+
 			(function(boxes, invisibleBoxes, numberOfBoxes, i) {
 				invisibleBoxes[i].click(function() {
 					if (model.value == model.peek(i)) {
@@ -99,9 +99,9 @@ function Picker(paper, model, properties) {
 								boxes[j].attr({
 									fill: properties["notSelectedBoxColor"]
 								});
-							}		
+							}
 						}
-						model.select(i);	
+						model.select(i);
 					};
 				});
 			})(boxes, invisibleBoxes, numberOfBoxes, i);

@@ -6,12 +6,12 @@ function successTest (numberOfDice, targetNumber) {
 
 	var result = new Object();
 	var myFilter = new GreaterOrEqualTargetNumberFilter(targetNumber);
-	
+
 	result.all = roll;
 	result.successes = roll.filter(myFilter.apply)
 	result.max = roll[roll.length-1];
 	result.sum = Array.sum(roll);
-	
+
 	if (roll.length == count(roll, 1)) {
 		result.fail = true;
 	}
@@ -25,12 +25,12 @@ Array.sum = function(myArray){
 }
 
 function GreaterOrEqualTargetNumberFilter (targetNumber) {
-	
+
 	var tn = targetNumber;
-	
+
 	this.apply = function (x) {
 		return x >= tn;
-	}	
+	}
 }
 
 /**
@@ -49,7 +49,7 @@ function count(myArr, el) {
 
 
 function DiceCup (numberOfSides) {
-	
+
 	this.rollOnce = function (numberOfDice) {
 		var cup = new Array();
 		var dice;
@@ -59,7 +59,7 @@ function DiceCup (numberOfSides) {
 		}
 		return cup;
 	}
-	
+
 	this.roll = function (numberOfDice, rerollAt) {
 		var a = this.rollOnce(numberOfDice);
 		return this.reroll (a, rerollAt).sort(function(a,b){return a - b});

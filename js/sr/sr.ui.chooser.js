@@ -49,21 +49,21 @@ function Chooser(paper, model, properties) {
 	this.draw = function() {
 		var numberOfBoxes = model.size();
 		var valuesPaths = this.properties["valuePaths"];
-		
+
 		var selectedValue = this.model.value;
-		
+
 		var selectedBox = paper.rect(
 			properties["x"],
-		 	properties["y"], 
-			properties["boxWidth"], 
-			properties["boxHeight"], 
+		 	properties["y"],
+			properties["boxWidth"],
+			properties["boxHeight"],
 			properties["radius"]
 		).attr({
 			fill: properties["backgroundColor"],
 			"stroke": properties["strokeColor"],
 			"stroke-width": properties["strokeThickness"]
 		});
-		
+
 		var weapon = paper.image(
 			properties["valuePaths"][selectedValue],
 			properties["x"],
@@ -71,7 +71,7 @@ function Chooser(paper, model, properties) {
 			properties["imageWidth"],
 			properties["imageHeight"]
 		);
-		
+
 		paper.text(
 			properties["x"] + properties["boxWidth"] - properties["textXOffset"],
 			properties["y"] + properties["boxHeight"] - properties["textYOffset"],
@@ -81,19 +81,19 @@ function Chooser(paper, model, properties) {
 			font: properties["fontStyle"],
 			"fill": properties["textColor"]
 		});
-		
+
 		weapon.click(function (event) {
 		    toggleOptions();
 		});
-		
+
 		(toggleOptions = function() {
 			open = !open;
 			if (open) {
 				properties["chooser"].show();
 				open = !open;
 			}
-				
+
 		})();
-		
+
 	};
 };
