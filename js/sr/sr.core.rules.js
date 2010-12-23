@@ -128,8 +128,11 @@ function Rules() {
 			} else {
 				
 				if (lightModifier.modifier + smokeModifier.modifier >= 8) {
+					// TODO better Reason mixing for light and smoke modifier
 					return new Modifier("Effectively Blind", 8);
 				} else { 
+					// TODO better Reason mixing for light and smoke modifier
+					
 					return new Modifier (lightModifier.reason + "\n" +  smokeModifier.reason, lightModifier.modifier + smokeModifier.modifier );
 				}
 			}
@@ -198,9 +201,10 @@ function Rules() {
 	};
 	
 	getSmokeModifier = function(smoke, thermo, lowlight) {
+		// TODO sort after thermo and lowlight, compare resutimg modifiers, return best
 		if (smoke == "none") {
 			
-            return new Modifier("No Smoke/Fog", "Nan");
+            return new Modifier("No Smoke/Fog", "NaN");
 
         } else if (smoke == "mist") {
 	
@@ -213,10 +217,10 @@ function Rules() {
 			} else	if (lowlight == "natural"){
 				return new Modifier("Mist, Low Light View (Natural)", 0);
 			} else {
-				return new Modifier("Mist", 0);
+				return new Modifier("Mist", 2);
 			}
 			
-        } else if (smoke == "minimal") {
+        } else if (smoke == "light") {
 	
 			if (thermo == "cyberware") {
 				return new Modifier("Light Smoke/Fog/Rain, Thermo View (Cyberware)", 0);
@@ -230,7 +234,7 @@ function Rules() {
 				return new Modifier("Light Smoke/Fog/Rain", 4);
 			}
 	
-        } else if (smoke == "partial") {
+        } else if (smoke == "heavy") {
 	
 			if (thermo == "cyberware") {
 				return new Modifier("Heavy Smoke/Fog/Rain, Thermo View (Cyberware)", 1);
