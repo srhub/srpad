@@ -353,7 +353,7 @@ window.onload = function() {
 	 };
 	new Chooser(paper, weaponModel, weaponProperties).draw();
 	
-	// strength modifier
+	// strength modifier 
 	paper.text(265, 359, "Strength Minimum").attr(modifierTextAttribute);
 	var strengthModel = new CounterModel ("strength", 6, 1, 12);
 	rules.register(strengthModel);
