@@ -116,7 +116,7 @@ function Rules() {
 		if (isNaN(lightModifier.modifier)) {
 			
 			if (isNaN(smokeModifier.modifier)) {
-				return new Modifier ("Normal visibility", "NaN");
+				return new Modifier ("Normal visibility", Number.NaN);
 			} else {
 				return smokeModifier;
 			}
@@ -144,7 +144,7 @@ function Rules() {
 		
 		if (light == "normal") {
 			
-            return new Modifier("Normal Light", "NaN");
+            return new Modifier("Normal Light", Number.NaN);
 
         } else if (light == "dark") {
 	
@@ -204,7 +204,7 @@ function Rules() {
 		// TODO sort after thermo and lowlight, compare resutimg modifiers, return best
 		if (smoke == "none") {
 			
-            return new Modifier("No Smoke/Fog", "NaN");
+            return new Modifier("No Smoke/Fog", Number.NaN);
 
         } else if (smoke == "mist") {
 	
@@ -261,7 +261,7 @@ function Rules() {
 	
 	getAimedModifier = function(aimed) {
 		if (aimed == 0) {
-			return new Modifier("Not aiming", "NaN");
+			return new Modifier("Not aiming", Number.NaN);
 		} else {
 			return new Modifier("Aimed Shot", aimed);
 		}
@@ -271,7 +271,7 @@ function Rules() {
 		if (called == "true") {
 			return new Modifier("Called Shot", 4);
 		} else {
-			return new Modifier("Not Called Shot", "NaN");
+			return new Modifier("Not Called Shot", Number.NaN);
 		}
 	};
 	
@@ -279,7 +279,7 @@ function Rules() {
 		if (laser == "true") {
 			return new Modifier("Laser Sight", -1);
 		} else {
-			return new Modifier("No Laser Sight", "NaN");
+			return new Modifier("No Laser Sight", Number.NaN);
 		}
 	};
 
@@ -289,13 +289,13 @@ function Rules() {
 		} else if (smartgun == "goggles"){
 			return new Modifier("Smart Goggles", -1);
 		} else {
-			return new Modifier("No Smartgun", "NaN");
+			return new Modifier("No Smartgun", Number.NaN);
 		}
 	};
 
 	getMeleeModifier = function(melee) {
 		if (melee == 0) {
-			return new Modifier("No melee opponents", "NaN");
+			return new Modifier("No melee opponents", Number.NaN);
 		} else {
 			return new Modifier("Melee opponents", melee * 2);
 		}
@@ -303,7 +303,7 @@ function Rules() {
 	
 	getWoundedModifier = function(wounded) {
 		if (wounded == "uninjured") {
-			return new Modifier("Not wounded", "NaN");
+			return new Modifier("Not wounded", Number.NaN);
 		} else if (wounded == "light") {
 			return new Modifier("Light Wound", 1);
 		} else if (wounded == "moderate") {
@@ -319,13 +319,13 @@ function Rules() {
 		} else if (targetmovement == "running") {
 			return new Modifier("Running Target", 2);
 		} else {
-			return new Modifier("No target movement", "NaN");
+			return new Modifier("No target movement", Number.NaN);
 		}
 	};
 	
 	getCoverModifier = function(cover) {
 		if (cover == "false") {
-			return new Modifier("No partial cover", "NaN");
+			return new Modifier("No partial cover", Number.NaN);
 		} else {
 			return new Modifier("Partial Cover", 4);
 		}
@@ -333,7 +333,7 @@ function Rules() {
 	
 	getAdditionalTargetsModifier = function(targets) {
 		if (targets == 0) {
-			return new Modifier("No additional targets", "NaN");
+			return new Modifier("No additional targets", Number.NaN);
 		} else if (targets == 1) {
 			return new Modifier("1 Additional Target", 2);
 		} else if (targets > 1) {
@@ -359,7 +359,7 @@ function Rules() {
 			}
 
 		} else {
-			return new Modifier ("Stationary Attacker", "NaN");
+			return new Modifier ("Stationary Attacker", Number.NaN);
 		}
 	};
 	
@@ -367,9 +367,9 @@ function Rules() {
 		if (isNaN(attackerMovementModifier.modifier)) {
 			
 			if (gyro == 0) {
-				return new Modifier ("No Gyro", "NaN");
+				return new Modifier ("No Gyro", Number.NaN);
 			} else {
-				return new Modifier ("No Gyro Used", "NaN");
+				return new Modifier ("No Gyro Used", Number.NaN);
 			}
 			
 		} else {
@@ -423,9 +423,9 @@ function Rules() {
 		} else {
 			
 			if (isNaN(gyroAndMovementModifier.modifier)) {
-				return new Modifier ("No Recoil or Movement", "NaN");
+				return new Modifier ("No Recoil or Movement", Number.NaN);
 			} else {
-				return new Modifier ("Gyro Modifier already under consideration", "NaN");
+				return new Modifier ("Gyro Modifier already under consideration", Number.NaN);
 			}
 			
 		}
