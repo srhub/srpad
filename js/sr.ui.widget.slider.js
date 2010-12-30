@@ -20,21 +20,14 @@ function Slider (paper, properties, model) {
 
 	this.properties = this.getProperties(properties);
 
-	function drawStops(x, y, radius, scale, stops) {
+	this.drawStops = function (x, y, radius, scale, stops) {
 		var size = stops.length;
 		for (i = 0; i < size; i++) {
 			paper.ellipse(x + scale*stops[i], y + radius, radius, radius).attr({fill: properties["strokeColor"]});
 		}
-	}
+	};
 
-	function signum(x) {
-		if (x > 0) return 1;
-		else if (x < 0) return -1;
-		else return 0;
-	}
-
-	function drawTip(minX, maxX, x, y, boxWidth, boxHeight, triangleWidth, triangleHeight, value, fontStyle) {
-
+	this.drawTip = function (minX, maxX, x, y, boxWidth, boxHeight, triangleWidth, triangleHeight, value, fontStyle) {
 		var tip = paper.tip(
 				x, y,
 				boxWidth, boxHeight,
@@ -44,13 +37,13 @@ function Slider (paper, properties, model) {
 					"stroke-width": properties["strokeThickness"]
 				}
 			);
-		var text = paper.text(x, y - triangleHeight - boxHeight/2, eval(value)).attr({font: fontStyle});
+		var text = paper.text(x, y - triangleHeight - boxHeight/2, value).attr({font: fontStyle});
+
+
+		var previousDx = 0;
 
  		var start = function () {
-		   // get coordinates
-		   //this.ox = this.attrs.path[0][1];
-		   //this.oy = this.attrs.path[0][2];
-		 	this.attr({fill:  properties["strokeColor"]});
+			this.attr({fill:  properties["strokeColor"]});
 		};
 		var move = function (dx, dy) {
 			tx = signum(dx)*5;
@@ -70,7 +63,7 @@ function Slider (paper, properties, model) {
 		   this.attr({fill:  properties["backgroundColor"]});
 		};
 		tip.drag(move, start, up);
-	}
+	};
 
 	this.draw = function() {
 		paper.rect(
@@ -86,9 +79,9 @@ function Slider (paper, properties, model) {
 
 		// - radius because the endpoints should be inside the rounded edges
 		var scale =  (this.properties["width"] -this.properties["radius"]) / (this.properties["maximumValue"] - this.properties["minimumValue"]);
-		drawStops(this.properties["x"], this.properties["y"], this.properties["radius"], scale, properties["stops"]);
+		this.drawStops(this.properties["x"], this.properties["y"], this.properties["radius"], scale, properties["stops"]);
 
-		drawTip(
+		this.drawTip(
 			this.properties["x"] + 2 * this.properties["radius"],
 			this.properties["x"] + scale*this.model["maximumValue"],
 			this.properties["x"], this.properties["y"],
