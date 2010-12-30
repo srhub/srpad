@@ -3,32 +3,19 @@ function Counter(paper, model, properties) {
 	this.paper = paper;
 	this.model = model;
 
-	this.getDefaultProperties = function() {
-		return {
-			"x": 0,
-			"y": 0,
-			"radius": 3,
-			"outerBoxWidth": 2 * 37,
-			"backgroundColor": "#f6f7f6",
-			"innerBoxWidth": 37,
-			"boxHeight": 33,
-			"fontStyle": '800 20px "Helvetica Neue Condensed", "Helvetica Neue", "Helvetica", sans-serif',
-			"strokeColor": "#262626",
-			"strokeThickness": 1,
-			"xOffset": 10,
-			"yOffset": 2
-		};
-	};
-
-	this.getProperties = function(properties) {
-		var defaultProperties = this.getDefaultProperties();
-		for (key in defaultProperties) {
-			value = properties[key];
-			if (value == undefined) {
-				properties[key] = defaultProperties[key];
-			}
-		};
-		return properties;
+	this.defaultProperties = {
+		"x": 0,
+		"y": 0,
+		"radius": 3,
+		"outerBoxWidth": 2 * 37,
+		"backgroundColor": "#f6f7f6",
+		"innerBoxWidth": 37,
+		"boxHeight": 33,
+		"fontStyle": '800 20px "Helvetica Neue Condensed", "Helvetica Neue", "Helvetica", sans-serif',
+		"strokeColor": "#262626",
+		"strokeThickness": 1,
+		"xOffset": 10,
+		"yOffset": 2
 	};
 
 	this.properties = this.getProperties(properties);
@@ -86,14 +73,18 @@ function Counter(paper, model, properties) {
 
 		leftInvisibleBox.click(function() {
 			model.previous();
-			value.attr ({"text" : model.value})
+			value.attr ({"text" : model.value});
 		});
 
 		rightInvisibleBox.click(function() {
 			model.next();
-			value.attr ({"text" : model.value})
+			value.attr ({"text" : model.value});
 		});
 
 	};
 
+};
+
+Counter.prototype.getProperties = function(properties) {
+	return Widget.prototype.getProperties.call(this, properties);
 };

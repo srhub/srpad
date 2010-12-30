@@ -1,10 +1,9 @@
-function GroupChooser(paper, model, properties) {
+function TextgroupChooser(paper, model, properties) {
 
 	this.paper = paper;
 	this.model = model;
 
-	this.getDefaultProperties = function() {
-		return {
+	this.defaultProperties = {
 			"x": 125,
 			"y": (512-300)/2,
 			"radius": 3,
@@ -20,18 +19,6 @@ function GroupChooser(paper, model, properties) {
 			"textColor": "#262626",
 			"textXOffset": 20,
 			"textYOffset": 25
-		};
-	};
-
-	this.getProperties = function(properties) {
-		var defaultProperties = this.getDefaultProperties();
-		for (key in defaultProperties) {
-			value = properties[key];
-			if (value == undefined) {
-				properties[key] = defaultProperties[key];
-			}
-		};
-		return properties;
 	};
 
 	this.properties = this.getProperties(properties);
@@ -111,8 +98,10 @@ function GroupChooser(paper, model, properties) {
 
 			}
 			i++;
-		}
-
-
+		};
 	};
+};
+
+TextgroupChooser.prototype.getProperties = function(properties) {
+	return Widget.prototype.getProperties.call(this, properties);
 };

@@ -3,31 +3,18 @@ function Picker(paper, model, properties) {
 	this.paper = paper;
 	this.model = model;
 
-	this.getDefaultProperties = function() {
-		return {
-			"x": 0,
-			"y": 0,
-			"radius": 3,
-			"boxWidth": 37,
-			"boxHeight": 33,
-			"valuePaths": undefined,
-			"strokeColor": "#262626",
-			"strokeThickness": 1,
-			"shadowRadiusDisposition": 1,
-			"selectedBoxColor": "#585858",
-			"notSelectedBoxColor": "#f6f7f6"
-		};
-	};
-
-	this.getProperties = function(properties) {
-		var defaultProperties = this.getDefaultProperties();
-		for (key in defaultProperties) {
-			value = properties[key];
-			if (value == undefined) {
-				properties[key] = defaultProperties[key];
-			}
-		};
-		return properties;
+	this.defaultProperties = {
+		"x": 0,
+		"y": 0,
+		"radius": 3,
+		"boxWidth": 37,
+		"boxHeight": 33,
+		"valuePaths": undefined,
+		"strokeColor": "#262626",
+		"strokeThickness": 1,
+		"shadowRadiusDisposition": 1,
+		"selectedBoxColor": "#585858",
+		"notSelectedBoxColor": "#f6f7f6"
 	};
 
 	this.properties = this.getProperties(properties);
@@ -105,7 +92,10 @@ function Picker(paper, model, properties) {
 					};
 				});
 			})(boxes, invisibleBoxes, numberOfBoxes, i);
-		}
-
+		};
 	};
+};
+
+Picker.prototype.getProperties = function(properties) {
+	return Widget.prototype.getProperties.call(this, properties);
 };

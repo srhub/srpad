@@ -345,7 +345,7 @@ function RangedCombat (paper) {
 		groups["Heavy Weapons"] = new Array("light.machine.gun","medium.machine.gun","heavy.machine.gun","assault.cannon","grenade.launcher","missile.launcher");
 		groups["Impact Projectiles"] = new Array("bow","light.crossbow","medium.crossbow","heavy.crossbow","thrown.knife","shuriken");
 
-		var weaponChooser = new GroupChooser(paper, weaponModel, {"valueTitles": valueTitles, "groups": groups});
+		var weaponChooser = new TextgroupChooser(paper, weaponModel, {"valueTitles": valueTitles, "groups": groups});
 
 		var weaponProperties = {
 			x: 265, y: 265,
