@@ -1,40 +1,103 @@
-function RulesUI (properties) {
+function RulesUI(properties) {
 
-	this.getDefaultProperties = function() {
-		return {
-			"baseTargetNodeId": 0,
-			"modifiertCass": 0,
-			"radius": 3,
-			"width": 200,
-			"strokeColor": "#262626",
-			"strokeThickness": 1,
-			"backgroundColor": "#f6f7f6",
-			"boxWidth": 54,
-			"boxHeight": 20,
-			"triangleWidth": 8,
-			"triangleHeight": 8,
-			"fontStyle": '400 12px "Helvetica Neue Condensed", "Helvetica Neue", "Helvetica", sans-serif'
-		};
-	};
+    this.defaultProperties = {
+        "baseId": "base",
+        "modifiersId": "modifiers"
+    };
 
-	this.getProperties = function(properties) {
-		var defaultProperties = this.getDefaultProperties();
+    this.getProperties = function(properties) {
 
-		if (properties === undefined) {
-			return defaultProperties;
-		}
+        if (properties === undefined) {
+            return this.defaultProperties;
+        }
 
-		for (key in defaultProperties) {
-			value = properties[key];
-			if (value == undefined) {
-				properties[key] = defaultProperties[key];
-			}
-		};
-		return properties;
-	};
+        for (key in this.defaultProperties) {
+            value = properties[key];
+            if (value == undefined) {
+                properties[key] = this.defaultProperties[key];
+            }
+        };
+        return properties;
+    };
 
-	this.draw = function(baseTarget, modifier) {
-		
-	};
+	this.properties = this.getProperties(properties);
+
+	this.baseTarget;
+	this.modifiers;
+
+    this.draw = function() {
+		this.deleteAllChildren(this.properties["baseId"]);
+		this.deleteAllChildren(this.properties["modifiersId"]);
 	
+		var baseTag = document.getElementById(this.properties["baseId"]);
+		baseTag.appendChild(this.getBaseTag(this.baseTarget));
+		
+		var modifiersTag = document.getElementById(this.properties["modifiersId"]);
+		var modifierTags = this.getModifierTags (this.modifiers);
+		for (i = 0, length = modifierTags.length; i < length; i++) {
+            modifiersTag.appendChild(modifierTags[i]);
+        }
+    };
+
+    /**
+	 * Returns the base div tag
+	 * <div id="base">
+	 * 	<p class="reason">Heavy Pistol, Medium Range (50m)</p>
+	 * <p class="target">4</p>
+	 * </div>
+	 */
+    this.getBaseTag = function(baseTarget) {
+        var baseTag = document.createElement('div');
+        baseTag.setAttribute('id', "base");
+        baseTag.appendChild(this.getParagraphTag("reason", baseTarget.reason));
+        baseTag.appendChild(this.getParagraphTag("target", baseTarget.modifier));
+        return baseTag;
+    };
+
+    /**
+	 * Returns a collection of modifier tags
+	 */
+    this.getModifierTags = function(modifiers) {
+        var modifierTags = [];
+        for (i = 0, length = modifiers.length; i < length; i++) {
+            modifierTags.push(this.getModifierTag(modifiers[i]));
+        }
+        return modifierTags;
+    };
+
+    /**
+	 * Returns the modifier div tag
+	 * <div class="modifier">
+	 * 	<p class="reason">Blind</p>
+	 *  <p class="target">+8</p>
+	 * </div>
+	 */
+    this.getModifierTag = function(modifier) {
+        var modifierTag = document.createElement('div');
+        modifierTag.setAttribute('class', "modifier");
+        modifierTag.appendChild(this.getParagraphTag("reason", modifier.reason));
+        modifierTag.appendChild(this.getParagraphTag("target", modifier.modifier));
+        return modifierTag;
+    };
+
+    /**
+	 * Returns the a classed paragraph tag
+	 * 	<p class="reason">Blind</p>
+	 */
+    this.getParagraphTag = function(clazz, content) {
+        var p = document.createElement('p');
+        p.setAttribute('class', clazz);
+        p.appendChild(document.createTextNode(content));
+        return p;
+    };
+
+    this.deleteAllChildren = function(fatherId) {
+        var father = document.getElementById(fatherId);
+        if (father.hasChildNodes()) {
+            while (father.childNodes.length >= 1) {
+                father.removeChild(father.firstChild);
+            }
+        }
+    };
+
 };

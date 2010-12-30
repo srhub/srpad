@@ -4,6 +4,5 @@ window.onload = function() {
     var paper = Raphael("canvas", width, height);
 
 	new RangedCombat (paper).draw();
-	new Roller(paper).draw();
 
 };

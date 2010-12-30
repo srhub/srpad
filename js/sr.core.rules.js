@@ -1,5 +1,6 @@
 function Rules() {
 
+	var ui = new RulesUI();
     var models = new Array();
 
     // hook the model to the ruleset
@@ -43,6 +44,7 @@ function Rules() {
 
 		// TODO push base
 		console.log(baseTarget);
+		ui.baseTarget = baseTarget;
 
 		// TODO push modifier
 		var modifiers = getModifiers(new Array (
@@ -60,6 +62,9 @@ function Rules() {
 			recoilModifier
 		));
 		console.log(modifiers);
+		ui.modifiers = modifiers;
+		
+		ui.draw();
 
 
     };
