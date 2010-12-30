@@ -73,7 +73,9 @@ function Rules() {
 		if (range == 4) {
 			if (magnification == 0 ) {
 				return new Modifier("Short Range", 4);
-			}
+			} else {
+				return new Modifier("Short Range, Magnification " + magnification, 4);
+			} 
 		} else if (range == 5) {
 			if (magnification == 0 ) {
 				return new Modifier("Medium Range", 5);
