@@ -1,0 +1,24 @@
+#!/bin/sh
+java -jar $CLOSURE_COMPILER_HOME/build/compiler.jar \
+--js js/raphael.js \
+--js js/raphael.line.js \
+--js js/raphael.roundedRect.js \
+--js js/raphael.tip.js \
+--js js/sr.core.model.counter.js \
+--js js/sr.core.model.picker.js \
+--js js/sr.core.model.slider.js \
+--js js/sr.core.modifier.js \
+--js js/sr.core.rules.js \
+--js js/sr.ui.pad.js \
+--js js/sr.ui.pad.ranged-combat.js \
+--js js/sr.ui.rules.js \
+--js js/sr.ui.widget.avatar.js \
+--js js/sr.ui.widget.chooser.js \
+--js js/sr.ui.widget.counter.js \
+--js js/sr.ui.widget.js \
+--js js/sr.ui.widget.picker.js \
+--js js/sr.ui.widget.slider.js \
+--js js/sr.ui.widget.textgroup-chooser.js \
+--compilation_level SIMPLE_OPTIMIZATIONS \
+--warning_level QUIET > js/srpad-min.js
+
