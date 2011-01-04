@@ -282,11 +282,36 @@ function RangedCombat (paper) {
 			y: 180,
 			width: 200
 		};
+
 		var sliderModel = new SliderModel("range", 4, 0, 2000, 5, new Array(0, 100, 500, 1000));
 		rules.register(sliderModel);
 		new Slider(paper, sliderProperties, sliderModel).draw();
 
 		// weapon chooser
+		var weapons = [
+			new WeaponType ("hold-out.pistol", "firearm", "Hold-Out Pistol", "resources/weapons/holdout.png", [5, 15, 30, 50]),
+			new WeaponType ("light.pistol", "firearm", "Light Pistol", "resources/weapons/holdout.png", [5, 15, 30, 50]),
+			new WeaponType ("heavy.pistol", "firearm", "Heavy Pistol", "resources/weapons/holdout.png", [5, 20, 40, 60]),
+			new WeaponType ("smg", "firearm", "SMG", "resources/weapons/holdout.png", [10, 40, 80, 150]),
+			new WeaponType ("taser", "firearm", "Taser", "resources/weapons/holdout.png", [5, 10, 12, 15]),
+			new WeaponType ("shotgun", "firearm", "Shotgun", "resources/weapons/holdout.png", [10, 20, 50, 100]),
+			new WeaponType ("sporting.rifle", "firearm", "Sporting Rifle", "resources/weapons/holdout.png", [100, 250, 500, 750]),
+			new WeaponType ("sniper.rifle", "firearm", "Sniper Rifle", "resources/weapons/holdout.png", [150, 300, 700, 1000]),
+			new WeaponType ("assault.rifle", "firearm", "Assault Rifle", "resources/weapons/holdout.png", [50, 150, 350, 550]),
+			new WeaponType ("light.machine.gun", "heavy", "Light Machine Gun", "resources/weapons/holdout.png", [75, 200, 400, 800]),
+			new WeaponType ("medium.machine.gun", "heavy", "Medium Machine Gun", "resources/weapons/holdout.png", [80, 250, 750, 1200]),
+			new WeaponType ("heavy.machine.gun", "heavy", "Heavy Machine Gun", "resources/weapons/holdout.png", [80, 250, 800, 1500]),
+			new WeaponType ("assault.cannon", "heavy", "Assault Cannon", "resources/weapons/holdout.png", [100, 300, 900, 2400]),
+			new WeaponType ("grenade.launcher", "heavy", "Grenade Launcher", "resources/weapons/holdout.png", [50, 100, 150, 300]),
+			new WeaponType ("missile.launcher", "heavy", "Missile Launcher", "resources/weapons/holdout.png", [150, 450, 1200, 3000]),
+			new WeaponType ("bow", "projectile", "Bow", "resources/weapons/holdout.png", [1, 10, 30, 60], 5),
+			new WeaponType ("light.crossbow", "projectile", "Light Crossbow", "resources/weapons/holdout.png", [2, 8, 20, 40], 5),
+			new WeaponType ("medium.crossbow", "projectile", "Medium Crossbow", "resources/weapons/holdout.png", [3, 12, 30, 50], 5),
+			new WeaponType ("heavy.crossbow", "projectile", "Heavy Crossbow", "resources/weapons/holdout.png", [5, 15, 40, 60], 5),
+			new WeaponType ("thrown.knife", "projectile", "Thrown Knife", "resources/weapons/holdout.png", [1, 2, 3, 5], 5),
+			new WeaponType ("shuriken", "Shuriken", "projectile", "resources/weapons/holdout.png", [1, 2, 5, 7], 5)
+		];
+		
 		var weaponModel = new PickerModel("weapon", "heavy.pistol", new Array("hold-out.pistol","light.pistol","heavy.pistol","smg","taser","shotgun","sporting.rifle","sniper.rifle","assault.rifle","light.machine.gun","medium.machine.gun","heavy.machine.gun","assault.cannon","grenade.launcher","missile.launcher","bow","light.crossbow","medium.crossbow","heavy.crossbow","thrown.knife","shuriken"));
 		rules.register(weaponModel);
 
@@ -357,6 +382,7 @@ function RangedCombat (paper) {
 		var strengthModel = new CounterModel ("strength", 6, 1, 12);
 		rules.register(strengthModel);
 		new Counter (paper, strengthModel, {x: 265, y:367}).draw();
+				
 	};
 
 }

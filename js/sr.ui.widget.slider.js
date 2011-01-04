@@ -45,7 +45,8 @@ function Slider (paper, properties, model) {
 			this.properties["boxWidth"], this.properties["boxHeight"],
 			this.properties["triangleWidth"], this.properties["triangleHeight"],
 			model.value,
-			this.properties["fontStyle"]
+			this.properties["fontStyle"],
+			scale
 		);
 	};
 
@@ -56,7 +57,7 @@ function Slider (paper, properties, model) {
 		}
 	};
 
-	this.drawTip = function (minX, maxX, x, y, boxWidth, boxHeight, triangleWidth, triangleHeight, value, fontStyle) {
+	this.drawTip = function (minX, maxX, x, y, boxWidth, boxHeight, triangleWidth, triangleHeight, value, fontStyle, scale) {
 		var tip = paper.tip(
 				x, y,
 				boxWidth, boxHeight,
@@ -68,11 +69,12 @@ function Slider (paper, properties, model) {
 			);
 		var text = paper.text(x, y - triangleHeight - boxHeight/2, value).attr({font: fontStyle});
 		
+
  		var start = function () {
-			this.attr({fill:  properties["strokeColor"]});
+			//this.attr({fill:  properties["strokeColor"]});
 		};
 		var move = function (dx, dy) {
-			tx = Math.signum(dx)*5;
+			tx = Math.signum(dx)*2;
 			if (tx < 0 && (this.attrs.path[0][1] - tx) < minX) {
 				tx = minX - (this.attrs.path[0][1] - tx);
 			}
@@ -82,11 +84,18 @@ function Slider (paper, properties, model) {
 			else {
 				this.translate(tx, 0);
 				text.translate(tx, 0);
+				
 			};
+			
+			value = Math.floor(1/scale * (this.attrs.path[0][1] -x));
+			model.value;
+			text.attr('text',value);
+			console.log(value);
+			
 		};
 		var up = function () {
 		   // restoring state
-		   this.attr({fill:  properties["backgroundColor"]});
+		   //this.attr({fill:  properties["backgroundColor"]});
 		};
 		tip.drag(move, start, up);
 	};

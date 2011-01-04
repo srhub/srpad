@@ -1,4 +1,4 @@
-function SliderModel (id, defaultValue, minimumValue, maximumValue, step, stops) {
+function SliderModel (id, defaultValue, minimumValue, maximumValue, step, stops, mapping) {
 
 	this.id = id;
 	this.defaultValue = defaultValue;
@@ -6,17 +6,33 @@ function SliderModel (id, defaultValue, minimumValue, maximumValue, step, stops)
 	this.maximumValue = maximumValue;
 	this.step = step;
 	this.stops = stops;
-
+	if (mapping != undefined) {
+		this.mapping = mapping;
+	}
+	
 	this.value = defaultValue;
 
-	/* every model need these functions */
-
-	this.register= function(rules) {
-		this.rules = rules;
+	this.internalValue = mapping(this.value);
+	
+	this.set = function(value) {
+		// set the value
+		this.value = value;
+		
+		// check if internal value changed
+		var newInternalValue = this.mapping(value);
+		if (this.internalValue != newInternalValue) {
+			this.internalValue = newInternalValue;
+			this.fireChange();
+		}
 	};
-
-	this.fireChange = function () {
-		this.rules.change(this.id, this.value);
-	};
-
+		
+};
+SliderModel.prototype.mapping = function(key) {
+	return key;
+};
+SliderModel.prototype.register = function(rules) {
+	this.rules = rules;
+};
+SliderModel.prototype.fireChange = function () {
+	this.rules.change(this.id, this.internalValue);
 };
