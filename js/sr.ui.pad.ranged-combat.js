@@ -280,12 +280,9 @@ function RangedCombat (paper) {
 		var sliderProperties = {
 			x: 280,
 			y: 180,
-			width: 200,
-			minimumValue: 0,
-			maximumValue: 120,
-			stops: new Array(0, 50, 70, 100)
+			width: 200
 		};
-		var sliderModel = new SliderModel("range", 4, 0, 200, 5, new Array (10, 50, 80));
+		var sliderModel = new SliderModel("range", 4, 0, 2000, 5, new Array(0, 100, 500, 1000));
 		rules.register(sliderModel);
 		new Slider(paper, sliderProperties, sliderModel).draw();
 

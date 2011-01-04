@@ -20,6 +20,35 @@ function Slider (paper, properties, model) {
 
 	this.properties = this.getProperties(properties);
 
+	this.draw = function() {
+		paper.rect(
+			this.properties["x"],
+			this.properties["y"],
+			this.properties["width"],
+			2 * this.properties["radius"],
+			this.properties["radius"]).attr({
+				fill: this.properties["backgroundColor"],
+				"stroke": this.properties["strokeColor"],
+				"stroke-width": this.properties["strokeThickness"]
+		});
+
+		// - radius because the endpoints should be inside the rounded edges
+		var scale =  (this.properties["width"] - this.properties["radius"]) / (this.model["maximumValue"] - this.model["minimumValue"]);
+		
+		
+		this.drawStops(this.properties["x"], this.properties["y"], this.properties["radius"], scale, model["stops"]);
+
+		this.drawTip(
+			this.properties["x"] + 2 * this.properties["radius"],
+			this.properties["x"] + scale*this.model["maximumValue"],
+			this.properties["x"], this.properties["y"],
+			this.properties["boxWidth"], this.properties["boxHeight"],
+			this.properties["triangleWidth"], this.properties["triangleHeight"],
+			model.value,
+			this.properties["fontStyle"]
+		);
+	};
+
 	this.drawStops = function (x, y, radius, scale, stops) {
 		var size = stops.length;
 		for (i = 0; i < size; i++) {
@@ -38,10 +67,7 @@ function Slider (paper, properties, model) {
 				}
 			);
 		var text = paper.text(x, y - triangleHeight - boxHeight/2, value).attr({font: fontStyle});
-
-
-		var previousDx = 0;
-
+		
  		var start = function () {
 			this.attr({fill:  properties["strokeColor"]});
 		};
@@ -65,32 +91,7 @@ function Slider (paper, properties, model) {
 		tip.drag(move, start, up);
 	};
 
-	this.draw = function() {
-		paper.rect(
-			this.properties["x"],
-			this.properties["y"],
-			this.properties["width"],
-			2 * this.properties["radius"],
-			this.properties["radius"]).attr({
-				fill: this.properties["backgroundColor"],
-				"stroke": this.properties["strokeColor"],
-				"stroke-width": this.properties["strokeThickness"]
-		});
-
-		// - radius because the endpoints should be inside the rounded edges
-		var scale =  (this.properties["width"] -this.properties["radius"]) / (this.properties["maximumValue"] - this.properties["minimumValue"]);
-		this.drawStops(this.properties["x"], this.properties["y"], this.properties["radius"], scale, properties["stops"]);
-
-		this.drawTip(
-			this.properties["x"] + 2 * this.properties["radius"],
-			this.properties["x"] + scale*this.model["maximumValue"],
-			this.properties["x"], this.properties["y"],
-			this.properties["boxWidth"], this.properties["boxHeight"],
-			this.properties["triangleWidth"], this.properties["triangleHeight"],
-			model.value,
-			this.properties["fontStyle"]
-		);
-	};
+	
 };
 Slider.prototype.getProperties = function(properties) {
 	return Widget.prototype.getProperties.call(this, properties);
