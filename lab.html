@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang=en xmlns="http://www.w3.org/1999/xhtml"> 
+
+<head>
+	
+	<title>Laboratory</title> 
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+
+	<script src="js/array.extract.js" type="text/javascript"></script>
+		
+	<script type="text/javascript">
+	
+		window.onload = function() {
+			
+			var testA = {
+				id : "testAId"
+			};
+			
+			var testB = {
+				id : "testBId"
+			};
+			
+			var test = [testA, testB, 10];
+			
+			console.log(test);
+			
+			var extract = test.extract("id");
+			
+			console.log(extract);
+			
+
+		};
+	
+	</script>	
+		
+</head>
+<body>
+
+	Test
+		
+</body>
+</html>
