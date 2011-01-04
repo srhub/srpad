@@ -46,7 +46,7 @@ function Slider (paper, properties, model) {
 			this.attr({fill:  properties["strokeColor"]});
 		};
 		var move = function (dx, dy) {
-			tx = signum(dx)*5;
+			tx = Math.signum(dx)*5;
 			if (tx < 0 && (this.attrs.path[0][1] - tx) < minX) {
 				tx = minX - (this.attrs.path[0][1] - tx);
 			}
