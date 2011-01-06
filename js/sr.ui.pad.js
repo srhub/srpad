@@ -27,7 +27,10 @@ window.onload = function() {
 		new WeaponType ("thrown.knife", "projectile", "Thrown Knife", "images/weapons/holdout.png", [1, 2, 3, 5], 5),
 		new WeaponType ("shuriken", "projectile", "Shuriken", "images/weapons/holdout.png", [1, 2, 5, 7], 5)
 	];
+	var rules = new Rules(new RulesUI({}, weaponTypes));
 	
-	new RangedCombat (paper, new Rules(new RulesUI({}, weaponTypes)), weaponTypes).draw();
+	
+	new RangedCombat (paper, rules, weaponTypes).draw();
+	rules.change("weapontype", "heavy.pistol");
 
 };

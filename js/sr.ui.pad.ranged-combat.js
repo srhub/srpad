@@ -18,7 +18,7 @@ function RangedCombat (paper, rules, weaponTypes) {
 	};
 
 	this.draw = function() {
-		
+
 		// header bar
 		this.paper.roundedRect(10, 0, 746, 30, 0, 0, 10, 10);
 
@@ -274,7 +274,7 @@ function RangedCombat (paper, rules, weaponTypes) {
 		var sliderModel = new SliderModel("range", 4, 0, 2000, 5, new Array(0, 100, 500, 1000));
 		this.rules.register(sliderModel);
 		new Slider(paper, sliderProperties, sliderModel).draw();
-		
+
 		var weaponTypeModel = new PickerModel("weapontype", "heavy.pistol", weaponTypes.extract("id"));
 		this.rules.register(weaponTypeModel);
 
@@ -298,7 +298,5 @@ function RangedCombat (paper, rules, weaponTypes) {
 		var strengthModel = new CounterModel ("strength", 6, 1, 12);
 		this.rules.register(strengthModel);
 		new Counter (paper, strengthModel, {x: 265, y:367}).draw();
-				
 	};
-
 }
