@@ -98,18 +98,6 @@ function RangedCombat (paper) {
 		 };
 		new Picker (paper, lightModel, lightProperties).draw();
 
-		// thermo smoke conditions
-		paper.text(408, 104, "Thermo").attr(modifierTextAttribute);
-		var thermosmokeModel = new PickerModel ("thermosmoke", "false", new Array("true"));
-		rules.register(thermosmokeModel);
-		var thermosmokeProperties = {
-			x: 408, y:112,
-			valuePaths: {
-				"true": "M 11.59375 9.0625 C 10.775734 9.1067 9.95075 9.4059998 9.40625 9.90625 C 8.92125 10.35325 8.6675 10.932499 8.6875 11.5625 C 8.179 11.6445 7.517688 11.79 6.875 12.0625 C 6.232312 12.335 5.60825 12.7345 5.09375 13.3125 C 4.79075 13.653 4.44169 14.14925 4.40625 14.78125 C 4.388531 15.09725 4.44807 15.443218 4.625 15.8125 C 4.80193 16.181781 5.10575 16.5905 5.5625 17 C 5.9856466 17.37897 6.4360044 17.590877 6.90625 17.71875 L 17.5625 10.6875 C 17.504924 10.653344 17.465234 10.591748 17.40625 10.5625 C 17.006187 10.36412 16.5835 10.28125 16.1875 10.28125 L 16.15625 10.28125 L 15.96875 10.28125 C 15.31675 10.28125 14.60575 10.29075 13.96875 10.71875 C 13.93975 10.73775 13.916 10.75025 13.875 10.78125 C 13.833 10.50925 13.745 10.26325 13.625 10.03125 C 13.367 9.5322501 12.95225 9.19475 12.40625 9.09375 C 12.147 9.04625 11.866423 9.04777 11.59375 9.0625 z"
-			}
-		 };
-		new Picker (paper, thermosmokeModel, thermosmokeProperties).draw();
-
 		// smoke conditions modifier
 		paper.text(482, 104, "Smoke/Fog").attr(modifierTextAttribute);
 		var smokeModel = new PickerModel ("smoke", "none", new Array("mist", "light", "heavy"));
