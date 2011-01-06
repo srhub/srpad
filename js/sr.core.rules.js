@@ -64,6 +64,8 @@ function Rules(ui) {
 		for (i = 0, size = modifiers.length; i < size; i++) {
 			result += modifiers[i].modifier;
 		}
+		if (result < 2) 
+			result = 2;
 
 		return {"weaponType": weapontype, "baseTarget": baseTarget, "modifiers": modifiers, "result":  result};
     };

@@ -90,8 +90,6 @@ function Slider (paper, properties, model) {
 			value = Math.floor(1/scale * (this.attrs.path[0][1] -x));
 			model.value;
 			text.attr('text',value);
-			console.log(value);
-			
 		};
 		var up = function () {
 		   this.attr({fill:  properties["backgroundColor"]});
