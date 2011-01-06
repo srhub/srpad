@@ -90,3 +90,19 @@ p {
 	padding-right:10px;
 	font-weight: 800;
 }
+
+#result .reason {
+	float: left;
+	width: 330px;
+}
+
+#result .target {
+	width: 30px;
+	float: right;
+	text-align: right;
+	padding-right:10px;
+	margin-top:10px;
+	border-top-style:double;
+	font-size: 14px;
+	font-weight: 800;
+}

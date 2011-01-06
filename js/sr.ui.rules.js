@@ -2,7 +2,8 @@ function RulesUI(properties, weaponTypes) {
 
     this.defaultProperties = {
         "baseId": "base",
-        "modifiersId": "modifiers"
+        "modifiersId": "modifiers",
+		"resultId": "result"
     };
 
 	this.properties = this.getProperties(properties);
@@ -13,35 +14,31 @@ function RulesUI(properties, weaponTypes) {
     this.draw = function() {
 		this.deleteAllChildren(this.properties["baseId"]);
 		this.deleteAllChildren(this.properties["modifiersId"]);
+		this.deleteAllChildren(this.properties["resultId"]);
 	
 		var weaponName =  this.weaponTypes.filterByField("id", this.calculationObject.weaponType)[0].name;
-		var baseTag = document.getElementById(this.properties["baseId"]);
-		baseTag.appendChild(this.getBaseTag(weaponName, this.calculationObject.baseTarget));
-		
-		 
-		
-		console.log(this.calculationObject.weaponType);
-		
+		this.setBase(document.getElementById(this.properties["baseId"]), weaponName, this.calculationObject.baseTarget);
+
 		var modifiersTag = document.getElementById(this.properties["modifiersId"]);
 		var modifierTags = this.getModifierTags (this.calculationObject.modifiers);
 		for (i = 0, length = modifierTags.length; i < length; i++) {
             modifiersTag.appendChild(modifierTags[i]);
         }
+
+		this.setResult(document.getElementById(this.properties["resultId"]), this.calculationObject.result);
+
     };
 
     /**
-	 * Returns the base div tag
+	 * Sets the base div tag
 	 * <div id="base">
 	 * 	<p class="reason">Heavy Pistol, Medium Range (50m)</p>
 	 * <p class="target">4</p>
 	 * </div>
 	 */
-    this.getBaseTag = function(weaponName, baseTarget) {
-        var baseTag = document.createElement('div');
-        baseTag.setAttribute('id', "base");
+    this.setBase = function(baseTag, weaponName, baseTarget) {
         baseTag.appendChild(this.getParagraphTag("reason", weaponName + ", " + baseTarget.reason));
         baseTag.appendChild(this.getParagraphTag("target", baseTarget.modifier));
-        return baseTag;
     };
 
     /**
@@ -68,6 +65,18 @@ function RulesUI(properties, weaponTypes) {
         modifierTag.appendChild(this.getParagraphTag("reason", this.getSignedNumber(modifier.reason)));
         modifierTag.appendChild(this.getParagraphTag("target", this.getSignedNumber(modifier.modifier)));
         return modifierTag;
+    };
+
+    /**
+	 * Sets the result div tag
+	 * <div id="base">
+	 * 	<p class="reason">Heavy Pistol, Medium Range (50m)</p>
+	 * <p class="target">4</p>
+	 * </div>
+	 */
+    this.setResult = function(tag, result) {
+        tag.appendChild(this.getParagraphTag("reason", ""));
+        tag.appendChild(this.getParagraphTag("target", result));
     };
 
 	this.getSignedNumber = function (number) {

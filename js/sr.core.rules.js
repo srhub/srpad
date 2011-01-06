@@ -10,7 +10,6 @@ function Rules(ui) {
     };
 
     this.change = function(id, value) {
-        console.log(id + ": " + value);
 		this.ui.calculationObject =  this.calculate(this.models);
 		this.ui.draw();
     };
@@ -18,7 +17,6 @@ function Rules(ui) {
     this.calculate = function(models) {
 		// weapon type
 		var weapontype = models["weapontype"].value;
-		console.log(models["weapontype"].value);
 		
 		// base target
         var baseTarget = getBaseTarget(models["range"].value, models["magnification"].value);
@@ -62,7 +60,12 @@ function Rules(ui) {
 			recoilModifier
 		));
 
-		return {"weaponType": weapontype, "baseTarget": baseTarget, "modifiers": modifiers};
+		var result = baseTarget.modifier;
+		for (i = 0, size = modifiers.length; i < size; i++) {
+			result += modifiers[i].modifier;
+		}
+
+		return {"weaponType": weapontype, "baseTarget": baseTarget, "modifiers": modifiers, "result":  result};
     };
 
 	getBaseTarget = function(range, magnification) {
