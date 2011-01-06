@@ -6,13 +6,10 @@ function SliderModel (id, defaultValue, minimumValue, maximumValue, step, stops,
 	this.maximumValue = maximumValue;
 	this.step = step;
 	this.stops = stops;
-	if (mapping != undefined) {
-		this.mapping = mapping;
-	}
-	
+	this.mapping = (mapping == undefined) ? function(key) {return key} : mapping;
 	this.value = defaultValue;
 
-	this.internalValue = mapping(this.value);
+	this.internalValue = this.mapping(this.value);
 	
 	this.set = function(value) {
 		// set the value
@@ -26,9 +23,6 @@ function SliderModel (id, defaultValue, minimumValue, maximumValue, step, stops,
 		}
 	};
 		
-};
-SliderModel.prototype.mapping = function(key) {
-	return key;
 };
 SliderModel.prototype.register = function(rules) {
 	this.rules = rules;

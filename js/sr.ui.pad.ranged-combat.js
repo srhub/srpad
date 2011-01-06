@@ -287,8 +287,8 @@ function RangedCombat (paper) {
 		rules.register(sliderModel);
 		new Slider(paper, sliderProperties, sliderModel).draw();
 
-		// weapon chooser
-		var weapons = [
+		// weapon type chooser
+		var weaponTypes = [
 			new WeaponType ("hold-out.pistol", "firearm", "Hold-Out Pistol", "resources/weapons/holdout.png", [5, 15, 30, 50]),
 			new WeaponType ("light.pistol", "firearm", "Light Pistol", "resources/weapons/holdout.png", [5, 15, 30, 50]),
 			new WeaponType ("heavy.pistol", "firearm", "Heavy Pistol", "resources/weapons/holdout.png", [5, 20, 40, 60]),
@@ -304,78 +304,31 @@ function RangedCombat (paper) {
 			new WeaponType ("assault.cannon", "heavy", "Assault Cannon", "resources/weapons/holdout.png", [100, 300, 900, 2400]),
 			new WeaponType ("grenade.launcher", "heavy", "Grenade Launcher", "resources/weapons/holdout.png", [50, 100, 150, 300]),
 			new WeaponType ("missile.launcher", "heavy", "Missile Launcher", "resources/weapons/holdout.png", [150, 450, 1200, 3000]),
-			new WeaponType ("bow", "projectile", "Bow", "resources/weapons/holdout.png", [1, 10, 30, 60], 5),
+			new WeaponType ("bow", "Bow", "projectile", "resources/weapons/holdout.png", [1, 10, 30, 60], 5),
 			new WeaponType ("light.crossbow", "projectile", "Light Crossbow", "resources/weapons/holdout.png", [2, 8, 20, 40], 5),
 			new WeaponType ("medium.crossbow", "projectile", "Medium Crossbow", "resources/weapons/holdout.png", [3, 12, 30, 50], 5),
 			new WeaponType ("heavy.crossbow", "projectile", "Heavy Crossbow", "resources/weapons/holdout.png", [5, 15, 40, 60], 5),
 			new WeaponType ("thrown.knife", "projectile", "Thrown Knife", "resources/weapons/holdout.png", [1, 2, 3, 5], 5),
-			new WeaponType ("shuriken", "Shuriken", "projectile", "resources/weapons/holdout.png", [1, 2, 5, 7], 5)
+			new WeaponType ("shuriken", "projectile", "Shuriken", "resources/weapons/holdout.png", [1, 2, 5, 7], 5)
 		];
 		
-		var weaponModel = new PickerModel("weapon", "heavy.pistol", new Array("hold-out.pistol","light.pistol","heavy.pistol","smg","taser","shotgun","sporting.rifle","sniper.rifle","assault.rifle","light.machine.gun","medium.machine.gun","heavy.machine.gun","assault.cannon","grenade.launcher","missile.launcher","bow","light.crossbow","medium.crossbow","heavy.crossbow","thrown.knife","shuriken"));
-		rules.register(weaponModel);
-
-		var valuePaths = {
-			"hold-out.pistol": "resources/weapons/holdout.png",
-			"light.pistol": "resources/weapons/holdout.png",
-			"heavy.pistol": "resources/weapons/holdout.png",
-			"smg": "resources/weapons/holdout.png",
-			"taser": "resources/weapons/holdout.png",
-			"shotgun": "resources/weapons/holdout.png",
-			"sporting.rifle": "resources/weapons/holdout.png",
-			"sniper.rifle": "resources/weapons/holdout.png",
-			"assault.rifle": "resources/weapons/holdout.png",
-			"light.machine.gun": "resources/weapons/holdout.png",
-			"medium.machine.gun": "resources/weapons/holdout.png",
-			"heavy.machine.gun": "resources/weapons/holdout.png",
-			"assault.cannon": "resources/weapons/holdout.png",
-			"grenade.launcher": "resources/weapons/holdout.png",
-			"missile.launcher": "resources/weapons/holdout.png",
-			"bow": "resources/weapons/holdout.png",
-			"light.crossbow": "resources/weapons/holdout.png",
-			"medium.crossbow": "resources/weapons/holdout.png",
-			"heavy.crossbow": "resources/weapons/holdout.png",
-			"thrown.knife": "resources/weapons/holdout.png",
-			"shuriken": "resources/weapons/holdout.png"
-		};
-		var valueTitles = {
-			"hold-out.pistol": "Hold Out Pistol",
-			"light.pistol": "Light Pistol",
-			"heavy.pistol": "Heavy Pistol",
-			"smg": "SMG",
-			"taser": "Taser",
-			"shotgun": "Shotgun",
-			"sporting.rifle": "Sporting Rifle",
-			"sniper.rifle": "Sniper Rifle",
-			"assault.rifle": "Assault Rifle",
-			"light.machine.gun": "Light Machine Gun",
-			"medium.machine.gun": "Medium Machine Gun",
-			"heavy.machine.gun": "Heavy Machine Gun",
-			"assault.cannon": "Assault Cannon",
-			"grenade.launcher": "Grenade Launcher",
-			"missile.launcher": "Missile Launcher",
-			"bow": "Bow",
-			"light.crossbow": "Light Crossbow",
-			"medium.crossbow": "Medium Crossbow",
-			"heavy.crossbow": "Heavy Crossbow",
-			"thrown.knife": "Thrown Knife",
-			"shuriken": "Shuriken"
-		};
+		var weaponTypeModel = new PickerModel("weapon", "heavy.pistol", weaponTypes.extract("id"));
+		rules.register(weaponTypeModel);
 
 		var groups = {};
-		groups["Firearms"] = new Array("hold-out.pistol","light.pistol","heavy.pistol","smg","taser","shotgun","sporting.rifle","sniper.rifle","assault.rifle");
-		groups["Heavy Weapons"] = new Array("light.machine.gun","medium.machine.gun","heavy.machine.gun","assault.cannon","grenade.launcher","missile.launcher");
-		groups["Impact Projectiles"] = new Array("bow","light.crossbow","medium.crossbow","heavy.crossbow","thrown.knife","shuriken");
+		groups["Firearms"] = weaponTypes.filterByField("type", "firearm").extract("id");
+		groups["Heavy Weapons"] = weaponTypes.filterByField("type", "heavy").extract("id");
+		groups["Impact Projectiles"] = weaponTypes.filterByField("type", "projectile").extract("id");
 
-		var weaponChooser = new TextgroupChooser(paper, weaponModel, {"valueTitles": valueTitles, "groups": groups});
-
-		var weaponProperties = {
+		var idToNameMapping = weaponTypes.map("id", "name");
+		var weaponTypeChooser = new TextgroupChooser(paper, weaponTypeModel, {"valueTitles": idToNameMapping, "groups": groups});
+		var weaponTypeProperties = {
 			x: 265, y: 265,
-			"valuePaths": valuePaths,
-			"valueTitles": valueTitles,
-			"chooser": weaponChooser
+			"valuePaths": weaponTypes.map("id","picture"),
+			"valueTitles": idToNameMapping,
+			"chooser": weaponTypeChooser
 		 };
-		new Chooser(paper, weaponModel, weaponProperties).draw();
+		new Chooser(paper, weaponTypeModel, weaponTypeProperties).draw();
 
 		// strength modifier
 		paper.text(265, 359, "Strength Minimum").attr(modifierTextAttribute);
