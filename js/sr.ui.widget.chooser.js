@@ -1,4 +1,4 @@
-function Chooser(paper, model, properties) {
+function Chooser(paper, model, weaponTypes, properties) {
 
 	this.paper = paper;
 	this.model = model;
@@ -13,8 +13,6 @@ function Chooser(paper, model, properties) {
 		"boxHeight": 85,
 		"imageWidth": 236,
 		"imageHeight": 83,
-		"valuePaths": undefined,
-		"valueTitles": undefined,
 		"chooser": undefined,
 		"backgroundColor": "#f6f7f6",
 		"strokeColor": "#262626",
@@ -34,11 +32,8 @@ function Chooser(paper, model, properties) {
 	groupChooser.chooser = this;
 
 	this.draw = function() {
-		var numberOfBoxes = model.size();
-		var valuesPaths = this.properties["valuePaths"];
-
-		var selectedValue = this.model.value;
-
+		var selectedId = this.model.value;
+		
 		var selectedBox = paper.rect(
 			properties["x"],
 		 	properties["y"],
@@ -52,7 +47,7 @@ function Chooser(paper, model, properties) {
 		});
 
 		var weapon = paper.image(
-			properties["valuePaths"][selectedValue],
+			weaponTypes.filterByField("id", selectedId)[0]["picture"],
 			properties["x"],
 			properties["y"],
 			properties["imageWidth"],
@@ -62,7 +57,7 @@ function Chooser(paper, model, properties) {
 		paper.text(
 			properties["x"] + properties["boxWidth"] - properties["textXOffset"],
 			properties["y"] + properties["boxHeight"] - properties["textYOffset"],
-			properties["valueTitles"][selectedValue]
+			weaponTypes.filterByField("id", selectedId)[0]["name"]
 		).attr({
 			"text-anchor": "end",
 			font: properties["fontStyle"],
@@ -79,7 +74,6 @@ function Chooser(paper, model, properties) {
 				properties["chooser"].show();
 				open = !open;
 			}
-
 		})();
 
 	};

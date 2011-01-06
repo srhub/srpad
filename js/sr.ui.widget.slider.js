@@ -20,51 +20,6 @@ function Slider (paper, properties, model) {
 
 	this.properties = this.getProperties(properties);
 
-	this.drawStops = function (x, y, radius, scale, stops) {
-		var size = stops.length;
-		for (i = 0; i < size; i++) {
-			paper.ellipse(x + scale*stops[i], y + radius, radius, radius).attr({fill: properties["strokeColor"]});
-		}
-	};
-
-	this.drawTip = function (minX, maxX, x, y, boxWidth, boxHeight, triangleWidth, triangleHeight, value, fontStyle) {
-		var tip = paper.tip(
-				x, y,
-				boxWidth, boxHeight,
-				triangleWidth, triangleHeight).attr({
-					fill:  properties["backgroundColor"],
-					"stroke": properties["strokeColor"],
-					"stroke-width": properties["strokeThickness"]
-				}
-			);
-		var text = paper.text(x, y - triangleHeight - boxHeight/2, value).attr({font: fontStyle});
-
-
-		var previousDx = 0;
-
- 		var start = function () {
-			this.attr({fill:  properties["strokeColor"]});
-		};
-		var move = function (dx, dy) {
-			tx = signum(dx)*5;
-			if (tx < 0 && (this.attrs.path[0][1] - tx) < minX) {
-				tx = minX - (this.attrs.path[0][1] - tx);
-			}
-			else if (tx > 0 && (this.attrs.path[0][1] + tx) > maxX) {
-				tx = (this.attrs.path[0][1] + tx) - maxX;
-			}
-			else {
-				this.translate(tx, 0);
-				text.translate(tx, 0);
-			};
-		};
-		var up = function () {
-		   // restoring state
-		   this.attr({fill:  properties["backgroundColor"]});
-		};
-		tip.drag(move, start, up);
-	};
-
 	this.draw = function() {
 		paper.rect(
 			this.properties["x"],
@@ -78,8 +33,10 @@ function Slider (paper, properties, model) {
 		});
 
 		// - radius because the endpoints should be inside the rounded edges
-		var scale =  (this.properties["width"] -this.properties["radius"]) / (this.properties["maximumValue"] - this.properties["minimumValue"]);
-		this.drawStops(this.properties["x"], this.properties["y"], this.properties["radius"], scale, properties["stops"]);
+		var scale =  (this.properties["width"] - this.properties["radius"]) / (this.model["maximumValue"] - this.model["minimumValue"]);
+		
+		
+		this.drawStops(this.properties["x"], this.properties["y"], this.properties["radius"], scale, model["stops"]);
 
 		this.drawTip(
 			this.properties["x"] + 2 * this.properties["radius"],
@@ -88,9 +45,61 @@ function Slider (paper, properties, model) {
 			this.properties["boxWidth"], this.properties["boxHeight"],
 			this.properties["triangleWidth"], this.properties["triangleHeight"],
 			model.value,
-			this.properties["fontStyle"]
+			this.properties["fontStyle"],
+			scale
 		);
 	};
+
+	this.drawStops = function (x, y, radius, scale, stops) {
+		var size = stops.length;
+		for (i = 0; i < size; i++) {
+			paper.ellipse(x + scale*stops[i], y + radius, radius, radius).attr({fill: properties["strokeColor"]});
+		}
+	};
+
+	this.drawTip = function (minX, maxX, x, y, boxWidth, boxHeight, triangleWidth, triangleHeight, value, fontStyle, scale) {
+		var tip = paper.tip(
+				x, y,
+				boxWidth, boxHeight,
+				triangleWidth, triangleHeight).attr({
+					fill:  properties["backgroundColor"],
+					"stroke": properties["strokeColor"],
+					"stroke-width": properties["strokeThickness"]
+				}
+			);
+		var text = paper.text(x, y - triangleHeight - boxHeight/2, value).attr({font: fontStyle});
+		
+
+ 		var start = function () {
+			this.attr({fill:  properties["strokeColor"]});
+		};
+		var move = function (dx, dy) {
+			tx = Math.signum(dx)*2;
+			if (tx < 0 && (this.attrs.path[0][1] - tx) < minX) {
+				tx = minX - (this.attrs.path[0][1] - tx);
+			}
+			else if (tx > 0 && (this.attrs.path[0][1] + tx) > maxX) {
+				tx = (this.attrs.path[0][1] + tx) - maxX;
+			}
+			else {
+				this.translate(tx, 0);
+				text.translate(tx, 0);
+				
+			};
+			
+			value = Math.floor(1/scale * (this.attrs.path[0][1] -x));
+			model.value;
+			text.attr('text',value);
+			console.log(value);
+			
+		};
+		var up = function () {
+		   this.attr({fill:  properties["backgroundColor"]});
+		};
+		tip.drag(move, start, up);
+	};
+
+	
 };
 Slider.prototype.getProperties = function(properties) {
 	return Widget.prototype.getProperties.call(this, properties);

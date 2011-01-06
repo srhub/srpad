@@ -75,10 +75,17 @@ function RulesUI(properties) {
     this.getModifierTag = function(modifier) {
         var modifierTag = document.createElement('div');
         modifierTag.setAttribute('class', "modifier");
-        modifierTag.appendChild(this.getParagraphTag("reason", modifier.reason));
-        modifierTag.appendChild(this.getParagraphTag("target", modifier.modifier));
+        modifierTag.appendChild(this.getParagraphTag("reason", this.getSignedNumber(modifier.reason)));
+        modifierTag.appendChild(this.getParagraphTag("target", this.getSignedNumber(modifier.modifier)));
         return modifierTag;
     };
+
+	this.getSignedNumber = function (number) {
+		if (Math.signum(number) > 0) {
+			return "+" + number;
+		} else 
+			return number;
+	};
 
     /**
 	 * Returns the a classed paragraph tag
