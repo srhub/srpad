@@ -4,6 +4,7 @@ function Widget () {
 
 Widget.prototype.getProperties = function(properties) {
 	var defaultProperties = this.defaultProperties;
+	if (properties == undefined) return defaultProperties;
 	for (key in defaultProperties) {
 		value = properties[key];
 		if (value == undefined) {

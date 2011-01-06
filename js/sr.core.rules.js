@@ -1,22 +1,24 @@
-function Rules() {
+function Rules(ui) {
+	
+	this.models = [];
+	this.ui = ui;
 
-	var ui = new RulesUI();
-    var models = new Array();
-
-    // hook the model to the ruleset
+    // cross hook the model to the ruleset
     this.register = function(model) {
         model.register(this);
-        models[model.id] = model;
+        this.models[model.id] = model;
     };
 
     this.change = function(id, value) {
         console.log(id + ": " + value);
-        this.calculate();
+		this.ui.calculationObject =  this.calculate(this.models);
+		this.ui.draw();
     };
 
-    this.calculate = function() {
+    this.calculate = function(models) {
 		// weapon type
 		var weapontype = models["weapontype"].value;
+		console.log(models["weapontype"].value);
 		
 		// base target
         var baseTarget = getBaseTarget(models["range"].value, models["magnification"].value);
@@ -45,11 +47,6 @@ function Rules() {
 
 		var recoilModifier = getRecoilModifier(models["recoil"].value, models["bullets"].value, models["gyro"].value, gyroAndMovementModifier, attackerMovementModifier);
 
-		// TODO push base
-		console.log(baseTarget);
-		ui.baseTarget = baseTarget;
-
-		// TODO push modifier
 		var modifiers = getModifiers(new Array (
 			visibilityModifier,
 			aimedModifier,
@@ -64,12 +61,8 @@ function Rules() {
 			gyroAndMovementModifier,
 			recoilModifier
 		));
-		console.log(modifiers);
-		ui.modifiers = modifiers;
-		
-		ui.draw();
 
-
+		return {"weaponType": weapontype, "baseTarget": baseTarget, "modifiers": modifiers};
     };
 
 	getBaseTarget = function(range, magnification) {

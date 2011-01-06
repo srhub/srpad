@@ -1,39 +1,29 @@
-function RulesUI(properties) {
+function RulesUI(properties, weaponTypes) {
 
     this.defaultProperties = {
         "baseId": "base",
         "modifiersId": "modifiers"
     };
 
-    this.getProperties = function(properties) {
-
-        if (properties === undefined) {
-            return this.defaultProperties;
-        }
-
-        for (key in this.defaultProperties) {
-            value = properties[key];
-            if (value == undefined) {
-                properties[key] = this.defaultProperties[key];
-            }
-        };
-        return properties;
-    };
-
 	this.properties = this.getProperties(properties);
 
-	this.baseTarget;
-	this.modifiers;
-
+	this.weaponTypes = weaponTypes;
+	this.calculationObject;
+	
     this.draw = function() {
 		this.deleteAllChildren(this.properties["baseId"]);
 		this.deleteAllChildren(this.properties["modifiersId"]);
 	
+		var weaponName =  this.weaponTypes.filterByField("id", this.calculationObject.weaponType)[0].name;
 		var baseTag = document.getElementById(this.properties["baseId"]);
-		baseTag.appendChild(this.getBaseTag(this.baseTarget));
+		baseTag.appendChild(this.getBaseTag(weaponName, this.calculationObject.baseTarget));
+		
+		 
+		
+		console.log(this.calculationObject.weaponType);
 		
 		var modifiersTag = document.getElementById(this.properties["modifiersId"]);
-		var modifierTags = this.getModifierTags (this.modifiers);
+		var modifierTags = this.getModifierTags (this.calculationObject.modifiers);
 		for (i = 0, length = modifierTags.length; i < length; i++) {
             modifiersTag.appendChild(modifierTags[i]);
         }
@@ -46,10 +36,10 @@ function RulesUI(properties) {
 	 * <p class="target">4</p>
 	 * </div>
 	 */
-    this.getBaseTag = function(baseTarget) {
+    this.getBaseTag = function(weaponName, baseTarget) {
         var baseTag = document.createElement('div');
         baseTag.setAttribute('id', "base");
-        baseTag.appendChild(this.getParagraphTag("reason", baseTarget.reason));
+        baseTag.appendChild(this.getParagraphTag("reason", weaponName + ", " + baseTarget.reason));
         baseTag.appendChild(this.getParagraphTag("target", baseTarget.modifier));
         return baseTag;
     };
@@ -107,4 +97,7 @@ function RulesUI(properties) {
         }
     };
 
+};
+RulesUI.prototype.getProperties = function(properties) {
+	return Widget.prototype.getProperties.call(this, properties);
 };

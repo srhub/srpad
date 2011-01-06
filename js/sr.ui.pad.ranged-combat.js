@@ -1,6 +1,8 @@
-function RangedCombat (paper) {
+function RangedCombat (paper, rules, weaponTypes) {
 
+	this.rules = rules;
 	this.paper = paper;
+	this.weaponTypes = weaponTypes;
 
 	var modifierTextAttribute = {
         fill: "#1C1C1C",
@@ -30,12 +32,10 @@ function RangedCombat (paper) {
 
 
 		/********** MODIFIER **********/
-		var rules = new Rules();
-
 		// thermo modifier
 		paper.text(175, 52, "Thermovision").attr(modifierTextAttribute);
 		thermoModel = new PickerModel ("thermo", "none", new Array("natural", "cyberware"));
-		rules.register(thermoModel);
+		this.rules.register(thermoModel);
 		thermoProperties = {
 			x: 175, y:60,
 			valuePaths: {
@@ -48,7 +48,7 @@ function RangedCombat (paper) {
 		// lowlight modifier
 		paper.text(175, 104, "Low Light").attr(modifierTextAttribute);
 		var lowlightModel = new PickerModel ("lowlight", "none", new Array("natural", "cyberware"));
-		rules.register(lowlightModel);
+		this.rules.register(lowlightModel);
 		var lowlightProperties = {
 			x: 175, y:112,
 			valuePaths: {
@@ -61,7 +61,7 @@ function RangedCombat (paper) {
 		// blind fire modifier
 		paper.text(175, 155, "Blind Fire").attr(modifierTextAttribute);
 		var blindModel = new PickerModel ("blind", "false", new Array("true"));
-		rules.register(blindModel);
+		this.rules.register(blindModel);
 		var blindProperties = {
 			x: 175, y:163,
 			valuePaths: {
@@ -73,7 +73,7 @@ function RangedCombat (paper) {
 		// smartgun modifier
 		paper.text(175, 206, "Smartgun").attr(modifierTextAttribute);
 		var smartgunModel = new PickerModel ("smartgun", "none", new Array("link", "goggles"));
-		rules.register(smartgunModel);
+		this.rules.register(smartgunModel);
 		var smartgunProperties = {
 			x: 175, y:214,
 			valuePaths: {
@@ -86,7 +86,7 @@ function RangedCombat (paper) {
 		// light conditions modifier
 		paper.text(445, 52, "Light Conditions").attr(modifierTextAttribute);
 		var lightModel = new PickerModel ("light", "normal", new Array("dark",  "minimal", "partial","glare"));
-		rules.register(lightModel);
+		this.rules.register(lightModel);
 		var lightProperties = {
 			x: 445, y:60,
 			valuePaths: {
@@ -101,7 +101,7 @@ function RangedCombat (paper) {
 		// smoke conditions modifier
 		paper.text(482, 104, "Smoke/Fog").attr(modifierTextAttribute);
 		var smokeModel = new PickerModel ("smoke", "none", new Array("mist", "light", "heavy"));
-		rules.register(smokeModel);
+		this.rules.register(smokeModel);
 		var smokeProperties = {
 			x: 482, y:112,
 			valuePaths: {
@@ -115,13 +115,13 @@ function RangedCombat (paper) {
 		// aiming modifier
 		paper.text(519, 155, "Aiming").attr(modifierTextAttribute);
 		var aimingModel = new CounterModel ("aimed", 0, 0, 5);
-		rules.register(aimingModel);
+		this.rules.register(aimingModel);
 		new Counter (paper, aimingModel, {x: 519, y:163}).draw();
 
 		// called shot modifier
 		paper.text(556, 206, "Called").attr(modifierTextAttribute);
 		var calledModel = new PickerModel ("called", "false", new Array("true"));
-		rules.register(calledModel);
+		this.rules.register(calledModel);
 		var calledProperties = {
 			x: 556, y:214,
 			valuePaths: {
@@ -135,7 +135,7 @@ function RangedCombat (paper) {
 		// attacker movement modifier
 		paper.text(20, 257, "Movement").attr(modifierTextAttribute);
 		var attackermovementModel = new PickerModel ("attackermovement", "stationary", new Array("walking", "running"));
-		rules.register(attackermovementModel);
+		this.rules.register(attackermovementModel);
 		var attackermovementProperties = {
 			x: 20, y:265,
 			valuePaths: {
@@ -148,7 +148,7 @@ function RangedCombat (paper) {
 		// ground modifier
 		paper.text(124, 257, "Ground").attr(modifierTextAttribute);
 		var groundModel = new PickerModel ("ground", "normal", new Array("difficult"));
-		rules.register(groundModel);
+		this.rules.register(groundModel);
 		var groundProperties = {
 			x: 124, y:265,
 			valuePaths: {
@@ -160,13 +160,13 @@ function RangedCombat (paper) {
 		// melee modifier
 		paper.text(20, 308, "Melee Opponents").attr(modifierTextAttribute);
 		var meleeModel = new CounterModel ("melee", 0, 0, 5);
-		rules.register(meleeModel);
+		this.rules.register(meleeModel);
 		new Counter (paper, meleeModel, {x: 20, y:316}).draw();
 
 		// wounded modifier
 		paper.text(20, 359, "Wounded").attr(modifierTextAttribute);
 		var woundedModel = new PickerModel ("wounded", "uninjured", new Array("light", "moderate", "serious"));
-		rules.register(woundedModel);
+		this.rules.register(woundedModel);
 		var woundedProperties = {
 			x: 20, y:367,
 			valuePaths: {
@@ -182,19 +182,19 @@ function RangedCombat (paper) {
 		// recoil compensation modifier
 		paper.text(175, 257, "Recoil Comp").attr(modifierTextAttribute);
 		var recoilcompensationModel = new CounterModel ("recoil", 0, 0, 8);
-		rules.register(recoilcompensationModel);
+		this.rules.register(recoilcompensationModel);
 		new Counter (paper, recoilcompensationModel, {x: 175, y:265}).draw();
 
 		// gyro modifier
 		paper.text(175, 308, "Gyro Stab").attr(modifierTextAttribute);
 		var gyroModel = new CounterModel ("gyro", 0, 0, 8);
-		rules.register(gyroModel);
+		this.rules.register(gyroModel);
 		new Counter (paper, gyroModel, {x: 175, y:316}).draw();
 
 		// second firearm modifier
 		paper.text(175, 359, "Second Firearm").attr(modifierTextAttribute);
 		var secondfirearmModel = new PickerModel ("secondfirearm", "false", new Array("true"));
-		rules.register(secondfirearmModel);
+		this.rules.register(secondfirearmModel);
 		var secondfirearmProperties = {
 			x: 175, y:367,
 			valuePaths: {
@@ -208,13 +208,13 @@ function RangedCombat (paper) {
 		// image magnification modifier
 		paper.text(519, 257, "Magnification").attr(modifierTextAttribute);
 		var magnificationModel = new CounterModel ("magnification", 0, 0, 3);
-		rules.register(magnificationModel);
+		this.rules.register(magnificationModel);
 		new Counter (paper, magnificationModel, {x: 519, y:265}).draw();
 
 		// laser sight modifier
 		paper.text(556, 308, "Sight").attr(modifierTextAttribute);
 		var laserModel = new PickerModel ("laser", "false", new Array("true"));
-		rules.register(laserModel);
+		this.rules.register(laserModel);
 		var laserProperties = {
 			x: 556, y:316,
 			valuePaths: {
@@ -226,7 +226,7 @@ function RangedCombat (paper) {
 		// bullets modifier
 		paper.text(519, 359, "Bullets").attr(modifierTextAttribute);
 		var bulletsModel = new CounterModel ("bullets", 1, 1, 15);
-		rules.register(bulletsModel);
+		this.rules.register(bulletsModel);
 		new Counter (paper, bulletsModel, {x: 519, y:367}).draw();
 
 		/****************************/
@@ -234,7 +234,7 @@ function RangedCombat (paper) {
 		// target movement modifier
 		paper.text(605, 257, "Movement").attr(modifierTextAttribute);
 		var targetmovementModel = new PickerModel ("targetmovement", "walking", new Array("stationary", "running"));
-		rules.register(targetmovementModel);
+		this.rules.register(targetmovementModel);
 		var targetmovementProperties = {
 			x: 605, y:265,
 			valuePaths: {
@@ -247,7 +247,7 @@ function RangedCombat (paper) {
 		// cover modifier
 		paper.text(605, 308, "Cover").attr(modifierTextAttribute);
 		var coverModel = new PickerModel ("cover", "false", new Array("true"));
-		rules.register(coverModel);
+		this.rules.register(coverModel);
 		var coverProperties = {
 			x: 605, y:316,
 			valuePaths: {
@@ -259,7 +259,7 @@ function RangedCombat (paper) {
 		// additional targets modifier
 		paper.text(605, 359, "Add. Targets").attr(modifierTextAttribute);
 		var targetsModel = new CounterModel ("targets", 0, 0, 3);
-		rules.register(targetsModel);
+		this.rules.register(targetsModel);
 		new Counter (paper, targetsModel, {x: 605, y:367}).draw();
 
 		/****************************/
@@ -272,36 +272,11 @@ function RangedCombat (paper) {
 		};
 
 		var sliderModel = new SliderModel("range", 4, 0, 2000, 5, new Array(0, 100, 500, 1000));
-		rules.register(sliderModel);
+		this.rules.register(sliderModel);
 		new Slider(paper, sliderProperties, sliderModel).draw();
-
-		// weapon type chooser
-		var weaponTypes = [
-			new WeaponType ("hold-out.pistol", "firearm", "Hold-Out Pistol", "resources/weapons/holdout.png", [5, 15, 30, 50]),
-			new WeaponType ("light.pistol", "firearm", "Light Pistol", "resources/weapons/holdout.png", [5, 15, 30, 50]),
-			new WeaponType ("heavy.pistol", "firearm", "Heavy Pistol", "resources/weapons/holdout.png", [5, 20, 40, 60]),
-			new WeaponType ("smg", "firearm", "SMG", "resources/weapons/holdout.png", [10, 40, 80, 150]),
-			new WeaponType ("taser", "firearm", "Taser", "resources/weapons/holdout.png", [5, 10, 12, 15]),
-			new WeaponType ("shotgun", "firearm", "Shotgun", "resources/weapons/holdout.png", [10, 20, 50, 100]),
-			new WeaponType ("sporting.rifle", "firearm", "Sporting Rifle", "resources/weapons/holdout.png", [100, 250, 500, 750]),
-			new WeaponType ("sniper.rifle", "firearm", "Sniper Rifle", "resources/weapons/holdout.png", [150, 300, 700, 1000]),
-			new WeaponType ("assault.rifle", "firearm", "Assault Rifle", "resources/weapons/holdout.png", [50, 150, 350, 550]),
-			new WeaponType ("light.machine.gun", "heavy", "Light Machine Gun", "resources/weapons/holdout.png", [75, 200, 400, 800]),
-			new WeaponType ("medium.machine.gun", "heavy", "Medium Machine Gun", "resources/weapons/holdout.png", [80, 250, 750, 1200]),
-			new WeaponType ("heavy.machine.gun", "heavy", "Heavy Machine Gun", "resources/weapons/holdout.png", [80, 250, 800, 1500]),
-			new WeaponType ("assault.cannon", "heavy", "Assault Cannon", "resources/weapons/holdout.png", [100, 300, 900, 2400]),
-			new WeaponType ("grenade.launcher", "heavy", "Grenade Launcher", "resources/weapons/holdout.png", [50, 100, 150, 300]),
-			new WeaponType ("missile.launcher", "heavy", "Missile Launcher", "resources/weapons/holdout.png", [150, 450, 1200, 3000]),
-			new WeaponType ("bow", "Bow", "projectile", "resources/weapons/holdout.png", [1, 10, 30, 60], 5),
-			new WeaponType ("light.crossbow", "projectile", "Light Crossbow", "resources/weapons/holdout.png", [2, 8, 20, 40], 5),
-			new WeaponType ("medium.crossbow", "projectile", "Medium Crossbow", "resources/weapons/holdout.png", [3, 12, 30, 50], 5),
-			new WeaponType ("heavy.crossbow", "projectile", "Heavy Crossbow", "resources/weapons/holdout.png", [5, 15, 40, 60], 5),
-			new WeaponType ("thrown.knife", "projectile", "Thrown Knife", "resources/weapons/holdout.png", [1, 2, 3, 5], 5),
-			new WeaponType ("shuriken", "projectile", "Shuriken", "resources/weapons/holdout.png", [1, 2, 5, 7], 5)
-		];
 		
-		var weaponTypeModel = new PickerModel("weapon", "heavy.pistol", weaponTypes.extract("id"));
-		rules.register(weaponTypeModel);
+		var weaponTypeModel = new PickerModel("weapontype", "heavy.pistol", weaponTypes.extract("id"));
+		this.rules.register(weaponTypeModel);
 
 		var groups = {};
 		groups["Firearms"] = weaponTypes.filterByField("type", "firearm").extract("id");
@@ -321,7 +296,7 @@ function RangedCombat (paper) {
 		// strength modifier
 		paper.text(265, 359, "Strength Minimum").attr(modifierTextAttribute);
 		var strengthModel = new CounterModel ("strength", 6, 1, 12);
-		rules.register(strengthModel);
+		this.rules.register(strengthModel);
 		new Counter (paper, strengthModel, {x: 265, y:367}).draw();
 				
 	};
