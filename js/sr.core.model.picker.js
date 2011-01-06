@@ -15,13 +15,17 @@ function PickerModel (id, defaultValue, values) {
 	};
 
 	this.selectValue = function(value) {
-		this.value = value;
-		this.fireChange();
+		if (this.value != value) {
+			this.value = value;
+			this.fireChange();
+		}
 	};
 
 	this.select = function(key) {
-		this.value = this.values[key];
-		this.fireChange();
+		if (this.value != this.values[key]) {
+				this.value = this.values[key];
+				this.fireChange();
+		}
 	};
 
 	this.deselect = function() {
