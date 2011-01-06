@@ -71,7 +71,7 @@ function Slider (paper, properties, model) {
 		
 
  		var start = function () {
-			//this.attr({fill:  properties["strokeColor"]});
+			this.attr({fill:  properties["strokeColor"]});
 		};
 		var move = function (dx, dy) {
 			tx = Math.signum(dx)*2;
@@ -94,8 +94,7 @@ function Slider (paper, properties, model) {
 			
 		};
 		var up = function () {
-		   // restoring state
-		   //this.attr({fill:  properties["backgroundColor"]});
+		   this.attr({fill:  properties["backgroundColor"]});
 		};
 		tip.drag(move, start, up);
 	};
