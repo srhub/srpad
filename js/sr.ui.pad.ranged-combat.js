@@ -316,7 +316,7 @@ function RangedCombat (paper) {
 			"valueTitles": idToNameMapping,
 			"chooser": weaponTypeChooser
 		 };
-		new Chooser(paper, weaponTypeModel, weaponTypeProperties).draw();
+		new Chooser(paper, weaponTypeModel, weaponTypes, weaponTypeProperties).draw();
 
 		// strength modifier
 		paper.text(265, 359, "Strength Minimum").attr(modifierTextAttribute);
