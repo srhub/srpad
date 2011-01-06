@@ -15,6 +15,9 @@ function Rules() {
     };
 
     this.calculate = function() {
+		// weapon type
+		var weapontype = models["weapontype"].value;
+		
 		// base target
         var baseTarget = getBaseTarget(models["range"].value, models["magnification"].value);
 
