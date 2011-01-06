@@ -24,11 +24,11 @@ function RangedCombat (paper, rules, weaponTypes) {
 
 		// attacker avatar
 		paper.text(20, 50, "ATTACKER").attr(avatarTextAttribute);
-		var attacker = new Avatar (paper, {x: 20, y: 60, name: "Aquila", path: "resources/avatars/avatar2.jpg"}).draw();
+		var attacker = new Avatar (paper, {x: 20, y: 60, name: "Aquila", path: "images/avatars/avatar2.jpg"}).draw();
 
 		// target avatar
 		paper.text(605, 50, "TARGET").attr(avatarTextAttribute);
-		var target = new Avatar (paper, {x: 605, y: 60, name: "NPC", path: "resources/avatars/avatar3.jpg"}).draw();
+		var target = new Avatar (paper, {x: 605, y: 60, name: "NPC", path: "images/avatars/avatar3.jpg"}).draw();
 
 
 		/********** MODIFIER **********/
