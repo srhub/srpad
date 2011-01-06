@@ -269,7 +269,7 @@ function Rules(ui) {
 		if (aimed == 0) {
 			return new Modifier("Not aiming", Number.NaN);
 		} else {
-			return new Modifier("Aimed Shot", aimed);
+			return new Modifier("Aimed Shot", -aimed);
 		}
 	};
 
