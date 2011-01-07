@@ -6,9 +6,8 @@ function SliderModel (id, defaultValue, minimumValue, maximumValue, step, stops,
 	this.maximumValue = maximumValue;
 	this.step = step;
 	this.stops = stops;
-	this.mapping = (mapping == undefined) ? function(key) {return key} : mapping;
+	this.mapping = (mapping == undefined) ? function(key) {return key;} : mapping;
 	this.value = defaultValue;
-
 	this.internalValue = this.mapping(this.value);
 	
 	this.set = function(value) {
