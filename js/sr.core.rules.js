@@ -19,7 +19,7 @@ function Rules(ui) {
 		var weapontype = models["weapontype"].value;
 		
 		// base target
-        var baseTarget = getBaseTarget(models["range"].value, models["magnification"].value);
+        var baseTarget = getBaseTarget(models["range"].internalValue, models["magnification"].value);
 
         // visibility
 		var visibilityModifier = getVisibilityModifier(models["blind"].value, models["light"].value, models["smoke"].value, models["thermo"].value, models["lowlight"].value);
@@ -87,7 +87,8 @@ function Rules(ui) {
 			} else 	if (magnification == 3 ) {
 				return new Modifier("Medium Range, Magnification 3", 4);
 			}
-		} else if (range == 6) {
+		// 8 is for grenade launchers
+		} else if (range == 6 || range == 8) {
 			if (magnification == 0 ) {
 				return new Modifier("Long Range", 6);
 			} else 	if (magnification == 1 ) {
@@ -110,7 +111,6 @@ function Rules(ui) {
 		}
 
 	};
-
 
 	getVisibilityModifier = function(blind, light, smoke, thermo, lowlight) {
 		var blindModifier = getBlindModifier(blind);

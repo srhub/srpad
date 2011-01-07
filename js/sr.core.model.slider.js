@@ -17,7 +17,6 @@ function SliderModel (id, defaultValue, minimumValue, maximumValue, step, stops,
 		// check if internal value changed
 		var newInternalValue = this.mapping(value);
 		if (this.internalValue != newInternalValue) {
-			console.log("ddd" + this.internalValue);
 			this.internalValue = newInternalValue;
 			this.fireChange();
 		}
