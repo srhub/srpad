@@ -1,25 +1,32 @@
 /**
  * Ignores the minimum ranges of grenade launcher and missile launcher
  */
-function WeaponType (id, type, name, picture, intervals, modifier) {
+function WeaponType (id, type, name, picture, stops, modifier) {
 
 	this.id = id;
 	this.type = type;
 	this.name = name;
 	this.picture = picture;
-	this.intervals = intervals;
+	this.stops = stops;
 	this.modifier = (modifier == undefined) ? 1 : modifier;
 };
-WeaponType.prototype.get = function(key) {
-	if (key <= this.intervals[0] * modifier) return 4;
-	if (key > this.intervals[0] * modifier && key <= this.intervals[1] * modifier) return 5;
-	if (key > this.intervals[1] * modifier && key <= this.intervals[2] * modifier) {
-		if (id == "grenade.launcher")
+WeaponType.prototype.getTargetNumber = function(range) {
+	if (range <= this.stops[0] * this.modifier) {
+		return 4;
+	}
+	if (range > this.stops[0] * this.modifier && range <= this.stops[1] * this.modifier) {
+		return 5;
+	}
+	if (range > this.stops[1] * this.modifier && range <= this.stops[2] * this.modifier) {
+		if (this.id == "grenade.launcher") {
 			return 8;
-		else
+		} else {
 			return 6;
-	};
-	if (key > this.intervals[2] * modifier && key <= this.intervals[3] * modifier) return 9;
+		}
+	}
+	if (range > this.stops[2] * this.modifier && range <= this.stops[3] * this.modifier) {
+		return 9;
+	} 
 	// there is a problem
 	return Number.NaN;
 };

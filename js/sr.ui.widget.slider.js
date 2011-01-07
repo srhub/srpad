@@ -1,4 +1,4 @@
-function Slider (paper, properties, model) {
+function Slider (paper, model, properties) {
 
 	this.paper = paper;
 	this.model = model;
@@ -69,12 +69,11 @@ function Slider (paper, properties, model) {
 			);
 		var text = paper.text(x, y - triangleHeight - boxHeight/2, value).attr({font: fontStyle});
 		
-
  		var start = function () {
 			this.attr({fill:  properties["strokeColor"]});
 		};
 		var move = function (dx, dy) {
-			tx = Math.signum(dx)*2;
+			tx = Math.signum(dx)*3;
 			if (tx < 0 && (this.attrs.path[0][1] - tx) < minX) {
 				tx = minX - (this.attrs.path[0][1] - tx);
 			}
@@ -88,7 +87,7 @@ function Slider (paper, properties, model) {
 			};
 			
 			value = Math.floor(1/scale * (this.attrs.path[0][1] -x));
-			model.value;
+			model.set(value);
 			text.attr('text',value);
 		};
 		var up = function () {

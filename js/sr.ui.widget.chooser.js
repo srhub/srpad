@@ -1,4 +1,4 @@
-function Chooser(paper, model, weaponTypes, properties) {
+function Chooser(paper, model, weaponTypes, slider, properties) {
 
 	this.paper = paper;
 	this.model = model;
