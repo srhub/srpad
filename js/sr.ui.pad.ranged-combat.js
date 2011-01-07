@@ -271,11 +271,17 @@ function RangedCombat (paper, rules, weaponTypes) {
 			width: 200
 		};
 
-		var sliderModel = new SliderModel("range", 4, 0, 2000, 5, new Array(0, 100, 500, 1000));
-		this.rules.register(sliderModel);
-		new Slider(paper, sliderProperties, sliderModel).draw();
+		var defaultWeapon = weaponTypes.filterByField("id", "heavy.pistol")[0];
+		var defaultWeaponRanges = defaultWeapon.stops;
+		var mapping = WeaponType.prototype.getTargetNumber.bind(defaultWeapon);
 
-		var weaponTypeModel = new PickerModel("weapontype", "heavy.pistol", weaponTypes.extract("id"));
+		console.log(mapping);
+
+		var sliderModel = new SliderModel("range", 4, 0, defaultWeaponRanges[defaultWeaponRanges.length-1], 5, defaultWeaponRanges, mapping);
+		this.rules.register(sliderModel);
+		var rangeSlider = new Slider(paper, sliderModel, sliderProperties).draw();
+
+		var weaponTypeModel = new PickerModel("weapontype", defaultWeapon.id, weaponTypes.extract("id"));
 		this.rules.register(weaponTypeModel);
 
 		var groups = {};
@@ -291,7 +297,7 @@ function RangedCombat (paper, rules, weaponTypes) {
 			"valueTitles": idToNameMapping,
 			"chooser": weaponTypeChooser
 		 };
-		new Chooser(paper, weaponTypeModel, weaponTypes, weaponTypeProperties).draw();
+		new Chooser(paper, weaponTypeModel, weaponTypes, rangeSlider, weaponTypeProperties).draw();
 
 		// strength modifier
 		paper.text(265, 359, "Strength Minimum").attr(modifierTextAttribute);
