@@ -2,6 +2,8 @@ function Chooser(paper, model, weaponTypes, slider, properties) {
 
 	this.paper = paper;
 	this.model = model;
+	this.weaponTypes = weaponTypes;
+	this.slider = slider;
 
 	this.open = false;
 
@@ -77,6 +79,15 @@ function Chooser(paper, model, weaponTypes, slider, properties) {
 		})();
 
 	};
+	
+	this.change = function (weaponTypeId) {
+		this.model.selectValue(weaponTypeId);
+		this.slider.model.stops = weaponTypes.filterByField("id", weaponTypeId)[0].stops;
+		this.slider.model.maximumValue = this.slider.model.stops.max();
+		this.slider.draw();
+		this.draw();
+	};
+	
 };
 
 Chooser.prototype.getProperties = function(properties) {

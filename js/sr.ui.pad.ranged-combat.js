@@ -277,7 +277,8 @@ function RangedCombat (paper, rules, weaponTypes) {
 
 		var sliderModel = new SliderModel("range", 4, 0, defaultWeaponRanges[defaultWeaponRanges.length-1], 5, defaultWeaponRanges, mapping);
 		this.rules.register(sliderModel);
-		var rangeSlider = new Slider(paper, sliderModel, sliderProperties).draw();
+		var rangeSlider = new Slider(paper, sliderModel, sliderProperties);
+		rangeSlider.draw();
 
 		var weaponTypeModel = new PickerModel("weapontype", defaultWeapon.id, weaponTypes.extract("id"));
 		this.rules.register(weaponTypeModel);

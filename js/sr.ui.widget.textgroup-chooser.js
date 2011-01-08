@@ -74,11 +74,11 @@ function TextgroupChooser(paper, model, properties) {
 			var options = groups[key];
 			var optionsLength = options.length;
 			for (j = 0; j < optionsLength; j++ ) {
-				var weaponId = options[j];
+				var weaponTypeId = options[j];
 				var text = paper.text(
 					properties["x"] + properties["textXOffset"] + i * (properties["width"]/numberOfGroups),
 					properties["y"] + 2 * properties["textYOffset"] + j * properties["textYOffset"],
-					properties["valueTitles"][weaponId]
+					properties["valueTitles"][weaponTypeId]
 				).attr({
 					"text-anchor": "start",
 					font: properties["fontStyle"],
@@ -88,13 +88,12 @@ function TextgroupChooser(paper, model, properties) {
 					text
 				);
 				var parent = this;
-				(function(text, weaponId, parent) {
+				(function(text, weaponTypeId, parent) {
 					text.click(function() {
-						parent.model.selectValue(weaponId);
-						parent.chooser.draw();
+						parent.chooser.change(weaponTypeId);
 						parent.hide();
 					});
-				})(text, weaponId, parent);
+				})(text, weaponTypeId, parent);
 
 			}
 			i++;
