@@ -89,7 +89,7 @@ function TextgroupChooser(paper, model, properties) {
 				);
 				var parent = this;
 				(function(text, weaponTypeId, parent) {
-					text.click(function() {
+					text.touchstart(function() {
 						parent.chooser.change(weaponTypeId);
 						parent.hide();
 					});

@@ -70,7 +70,7 @@ function Picker(paper, model, properties) {
 				);
 
 			(function(boxes, invisibleBoxes, numberOfBoxes, i) {
-				invisibleBoxes[i].click(function() {
+				invisibleBoxes[i].touchstart(function() {
 					if (model.value == model.peek(i)) {
 						model.deselect();
 						boxes[i].attr({

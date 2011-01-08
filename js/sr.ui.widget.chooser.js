@@ -66,7 +66,7 @@ function Chooser(paper, model, weaponTypes, slider, properties) {
 			"fill": properties["textColor"]
 		});
 
-		weapon.click(function (event) {
+		weapon.touchstart(function (event) {
 		    toggleOptions();
 		});
 

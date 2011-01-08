@@ -71,12 +71,12 @@ function Counter(paper, model, properties) {
 			properties["boxHeight"]
 			).attr(transparent);
 
-		leftInvisibleBox.click(function() {
+		leftInvisibleBox.touchstart(function() {
 			model.previous();
 			value.attr ({"text" : model.value});
 		});
 
-		rightInvisibleBox.click(function() {
+		rightInvisibleBox.touchstart(function() {
 			model.next();
 			value.attr ({"text" : model.value});
 		});
