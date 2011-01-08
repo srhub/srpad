@@ -81,9 +81,11 @@ function Chooser(paper, model, weaponTypes, slider, properties) {
 	};
 	
 	this.change = function (weaponTypeId) {
-		this.model.selectValue(weaponTypeId);
-		this.slider.model.stops = weaponTypes.filterByField("id", weaponTypeId)[0].stops;
-		this.slider.model.maximumValue = this.slider.model.stops.max();
+		this.model.selectValue(weaponTypeId);	
+		var weaponType = weaponTypes.filterByField("id", weaponTypeId)[0];
+		this.slider.model.stops = weaponType.stops;
+		this.slider.model.maximumValue = weaponType.stops.max();
+		this.slider.model.mapping = WeaponType.prototype.getTargetNumber.bind(weaponType);
 		this.slider.draw();
 		this.draw();
 	};
