@@ -38,32 +38,47 @@ function Slider(paper, model, properties) {
 	this.sliderStops.attr({
 		fill: properties["strokeColor"]
 	});
-
-	var start = function() {
-		this.attr({
-			fill: properties["strokeColor"]
-		});
+	var isDrag = false;
+	var dragger = function (e)
+	{
+		this.dx = e.clientX;
+		this.dy = e.clientY;
+		isDrag = this;
 	};
-	var move = function(dx, dy) {
-		tx = Math.signum(dx) * 3;
-		if (tx < 0 && (this.attrs.path[0][1] - tx) < this.minX) {
-			tx = this.minX - (this.attrs.path[0][1] - tx);
-		} else if (tx > 0 && (this.attrs.path[0][1] + tx) > this.maxX) {
-			tx = (this.attrs.path[0][1] + tx) - this.maxX;
-		} else {
-			this.translate(tx, 0);
-			this.tipText.translate(tx, 0);
 
+	document.ontouchstart = function () {
+		if(isDrag)	{
+			isDrag.attr({fill: "#ddd"});	
+		}
+	};
+	
+	document.ontouchmove = function (e) {
+		e = e || event;
+		if (isDrag) {
+			
+			//var el = document.getElementById("test");
+			//el.appendChild(document.createTextNode(isDrag.tipText));
+			
+			var newX = e.touches[0].pageX;
+			if (newX < isDrag.minX || newX > isDrag.maxX) {
+				return;
+			}
+			
+			value = Math.floor(1 / isDrag.sliderScale() * (isDrag.attrs.path[0][1] - isDrag.minX));
+			model.set(value);
+			isDrag.tipText.attr('text', value);
+			
+			isDrag.translate((newX - isDrag.dx), 0);
+			isDrag.tipText.translate((newX - isDrag.dx), 0);
+			isDrag.dx = newX;
 		};
-
-		value = Math.floor(1 / this.sliderScale() * (this.attrs.path[0][1] - this.minX));
-		model.set(value);
-		this.tipText.attr('text', value);
 	};
-	var up = function() {
-		this.attr({
-			fill: properties["backgroundColor"]
-		});
+
+	document.ontouchend = function () {
+		if(isDrag) {
+			isDrag.attr({fill:properties["backgroundColor"]});
+		}
+		isDrag = false;
 	};
 
 	// intitial tip
@@ -83,7 +98,7 @@ function Slider(paper, model, properties) {
 	});
 	this.tip.tipText = this.tipText;
 	
-	this.tip.drag(move, start, up);
+	this.tip.mousedown(dragger);
 
 
 	this.draw = function() {
