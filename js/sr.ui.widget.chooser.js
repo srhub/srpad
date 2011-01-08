@@ -14,7 +14,7 @@ function Chooser(paper, model, weaponTypes, slider, properties) {
 		"imageWidth": 236,
 		"imageHeight": 83,
 		"chooser": undefined,
-		"backgroundColor": "#f6f7f6",
+		"backgroundColor": "#ddd",
 		"strokeColor": "#262626",
 		"strokeThickness": 1,
 		"fontStyle": '400 12px "Helvetica Neue Condensed", "Helvetica Neue", "Helvetica", sans-serif',
