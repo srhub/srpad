@@ -57,10 +57,14 @@ function Slider(paper, model, properties) {
 		if (isDrag) {
 			
 			//var el = document.getElementById("test");
-			//el.appendChild(document.createTextNode(isDrag.tipText));
+			//el.appendChild(document.createTextNode(isDrag.minX));
 			
 			var newX = e.touches[0].pageX;
-			if (newX < isDrag.minX || newX > isDrag.maxX) {
+			var middleX = isDrag.getBBox().x + isDrag.getBBox().width; 
+			
+			//el.appendChild(document.createTextNode(middleX));
+			
+			if (middleX < isDrag.minX || middleX > isDrag.maxX) {
 				return;
 			}
 			
