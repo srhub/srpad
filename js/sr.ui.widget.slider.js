@@ -88,7 +88,7 @@ function Slider(paper, model, properties) {
 
 	this.draw = function() {
 		this.setStops(this.properties["x"], this.properties["y"], this.properties["radius"], this.sliderScale(), model["stops"]);
-		this.moveTip(5);
+		this.moveTip();
 	};
 
 	this.setStops = function(x, y, radius, scale, stops) {
@@ -103,8 +103,28 @@ function Slider(paper, model, properties) {
 		});
 	};
 
-	this.moveTip = function(x) {
+	this.moveTip = function() {
+		// reset maxX
+		this.tip.maxX = this.properties["x"] + this.sliderScale()*this.model["maximumValue"];
 		
+		// get current value
+		var currentX = this.tip.attrs.path[0][1];
+		var newX = this.properties["x"] + this.sliderScale()*this.model.value;
+
+		var tx = newX - currentX;
+		this.tip.translate(tx, 0);
+		this.tipText.translate(tx, 0);
+		
+		// reset text, reset model value
+		
+		// get current x position
+		
+		// correct if it is < min or > max
+		// calculate new position
+		
+		
+		// translate tip
+		// translate text
 	};
 
 };
