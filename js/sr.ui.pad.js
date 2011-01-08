@@ -13,7 +13,7 @@ window.onload = function() {
 		new WeaponType ("shotgun", "firearm", "Shotgun", "images/weapons/holdout.png", [10, 20, 50, 100]),
 		new WeaponType ("sporting.rifle", "firearm", "Sporting Rifle", "images/weapons/holdout.png", [100, 250, 500, 750]),
 		new WeaponType ("sniper.rifle", "firearm", "Sniper Rifle", "images/weapons/holdout.png", [150, 300, 700, 1000]),
-		new WeaponType ("assault.rifle", "firearm", "Assault Rifle", "images/weapons/holdout.png", [50, 150, 350, 550]),
+		new WeaponType ("assault.rifle", "firearm", "Assault Rifle", "images/weapons/assault.png", [50, 150, 350, 550]),
 		new WeaponType ("light.machine.gun", "heavy", "Light Machine Gun", "images/weapons/holdout.png", [75, 200, 400, 800]),
 		new WeaponType ("medium.machine.gun", "heavy", "Medium Machine Gun", "images/weapons/holdout.png", [80, 250, 750, 1200]),
 		new WeaponType ("heavy.machine.gun", "heavy", "Heavy Machine Gun", "images/weapons/holdout.png", [80, 250, 800, 1500]),
