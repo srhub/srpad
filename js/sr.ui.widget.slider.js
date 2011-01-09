@@ -42,7 +42,6 @@ function Slider(paper, model, properties) {
 	var dragger = function (e)
 	{
 		this.dx = e.clientX;
-		this.dy = e.clientY;
 		isDrag = this;
 	};
 	
@@ -56,13 +55,8 @@ function Slider(paper, model, properties) {
 		e = e || event;
 		if (isDrag) {
 			
-			//var el = document.getElementById("test");
-			//el.appendChild(document.createTextNode(isDrag.minX));
-			
 			var newX = e.clientX;
 			var middleX = isDrag.getBBox().x + isDrag.getBBox().width; 
-			
-			//el.appendChild(document.createTextNode(middleX));
 			
 			if (middleX < isDrag.minX || middleX > isDrag.maxX) {
 				return;
