@@ -39,6 +39,13 @@ function Slider(paper, model, properties) {
 		fill: properties["strokeColor"]
 	});
 	var isDrag = false;
+	var dragger = function (e)
+	{
+		this.dx = e.clientX;
+		this.dy = e.clientY;
+		isDrag = this;
+	};
+	
 	document.onmousedown = function () {
 		if(isDrag)	{
 			isDrag.attr({fill: "#ddd"});	
@@ -52,7 +59,7 @@ function Slider(paper, model, properties) {
 			//var el = document.getElementById("test");
 			//el.appendChild(document.createTextNode(isDrag.minX));
 			
-			var newX = e.touches[0].pageX;
+			var newX = e.clientX;
 			var middleX = isDrag.getBBox().x + isDrag.getBBox().width; 
 			
 			//el.appendChild(document.createTextNode(middleX));
@@ -95,7 +102,7 @@ function Slider(paper, model, properties) {
 	});
 	this.tip.tipText = this.tipText;
 	
-	this.tip.drag(move, start, up);
+	this.tip.mousedown(dragger);
 
 
 	this.draw = function() {
