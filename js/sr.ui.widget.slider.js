@@ -42,7 +42,6 @@ function Slider(paper, model, properties) {
 	var dragger = function (e)
 	{
 		this.dx = e.clientX;
-		this.dy = e.clientY;
 		isDrag = this;
 	};
 
@@ -50,20 +49,20 @@ function Slider(paper, model, properties) {
 		if(isDrag)	{
 			isDrag.attr({fill: "#ddd"});	
 		}
+
 	};
-	
+		
 	document.ontouchmove = function (e) {
 		e = e || event;
 		if (isDrag) {
 			var bbox = isDrag.getBBox();
-			var x = e.touches[0].pageX; // where did the user click
+			var x = e.touches[0].pageX; // where did the user click			
 			var priorX = isDrag.dx; // where was the draggable's x position before
 			var a = bbox.x; // where is the outer left point of the box
 			var w = bbox.width; // the width of the box
 			var minX = isDrag.minX; // the outer left edge of the slider
 			var maxX = isDrag.maxX; // the outer right edge of the slider
 			var tx; // the x distance i want to traverse
-
 			if ( (a + w/2) <= minX ) {
 				// block movement to left
 				if (x <= isDrag.dx) {
@@ -75,7 +74,6 @@ function Slider(paper, model, properties) {
 					return;
 				}
 			}
-
 			// handle overshoots due too quick movement
 			if ((a + w/2) - tx < minX ) {
 				tx = (a + w/2) - minX;
@@ -84,7 +82,7 @@ function Slider(paper, model, properties) {
 				tx = (a + w/2) - maxX;
 				x = maxX;
 			}
-
+			
 			tx = x - isDrag.dx;
 
 			var value = Math.floor(1 / isDrag.sliderScale() * (isDrag.attrs.path[0][1] - minX));

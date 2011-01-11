@@ -11,20 +11,20 @@ function WeaponType (id, type, name, picture, stops, modifier) {
 	this.modifier = (modifier == undefined) ? 1 : modifier;
 };
 WeaponType.prototype.getTargetNumber = function(range) {
-	if (range <= this.stops[0] * this.modifier) {
+	if (range <= this.stops[0]) {
 		return 4;
 	}
-	if (range > this.stops[0] * this.modifier && range <= this.stops[1] * this.modifier) {
+	if (range > this.stops[0] && range <= this.stops[1]) {
 		return 5;
 	}
-	if (range > this.stops[1] * this.modifier && range <= this.stops[2] * this.modifier) {
+	if (range > this.stops[1] && range <= this.stops[2]) {
 		if (this.id == "grenade.launcher") {
 			return 8;
 		} else {
 			return 6;
 		}
 	}
-	if (range > this.stops[2] * this.modifier && range <= this.stops[3] * this.modifier) {
+	if (range > this.stops[2] && range <= this.stops[3]) {
 		return 9;
 	} 
 	// there is a problem

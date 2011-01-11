@@ -20,12 +20,14 @@ window.onload = function() {
 		new WeaponType ("assault.cannon", "heavy", "Assault Cannon", "images/weapons/holdout.png", [100, 300, 900, 2400]),
 		new WeaponType ("grenade.launcher", "heavy", "Grenade Launcher", "images/weapons/holdout.png", [50, 100, 150, 300]),
 		new WeaponType ("missile.launcher", "heavy", "Missile Launcher", "images/weapons/holdout.png", [150, 450, 1200, 3000]),
-		new WeaponType ("bow", "Bow", "projectile", "images/weapons/holdout.png", [1, 10, 30, 60], 5),
-		new WeaponType ("light.crossbow", "projectile", "Light Crossbow", "images/weapons/holdout.png", [2, 8, 20, 40], 5),
-		new WeaponType ("medium.crossbow", "projectile", "Medium Crossbow", "images/weapons/holdout.png", [3, 12, 30, 50], 5),
-		new WeaponType ("heavy.crossbow", "projectile", "Heavy Crossbow", "images/weapons/holdout.png", [5, 15, 40, 60], 5),
-		new WeaponType ("thrown.knife", "projectile", "Thrown Knife", "images/weapons/holdout.png", [1, 2, 3, 5], 5),
-		new WeaponType ("shuriken", "projectile", "Shuriken", "images/weapons/holdout.png", [1, 2, 5, 7], 5)
+		
+		// stops already calculated for modifier 5 for all projectile weapons
+		new WeaponType ("bow", "projectile", "Bow", "images/weapons/holdout.png", [5, 50, 150, 300], 5),
+		new WeaponType ("light.crossbow", "projectile", "Light Crossbow", "images/weapons/holdout.png", [10, 40, 100, 200], 5),	
+		new WeaponType ("medium.crossbow", "projectile", "Medium Crossbow", "images/weapons/holdout.png", [15, 60, 150, 250], 5),
+		new WeaponType ("heavy.crossbow", "projectile", "Heavy Crossbow", "images/weapons/holdout.png", [25, 75, 200, 300], 5),
+		new WeaponType ("thrown.knife", "projectile", "Thrown Knife", "images/weapons/holdout.png", [5, 10, 15, 25], 5),
+		new WeaponType ("shuriken", "projectile", "Shuriken", "images/weapons/holdout.png", [5, 10, 25, 35], 5)
 	];
 	
 	var rules = new Rules(new RulesUI({}, weaponTypes));

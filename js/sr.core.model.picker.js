@@ -6,40 +6,33 @@ function PickerModel (id, defaultValue, values) {
 
 	this.value = this.defaultValue;
 
-	this.size = function() {
-		return this.values.length;
-	};
-
-	this.peek = function(key) {
-		return this.values[key];
-	};
-
-	this.selectValue = function(value) {
-		if (this.value != value) {
-			this.value = value;
-			this.fireChange();
-		}
-	};
-
-	this.select = function(key) {
-		if (this.value != this.values[key]) {
-				this.value = this.values[key];
-				this.fireChange();
-		}
-	};
-
-	this.deselect = function() {
-		this.value = this.defaultValue;
+};
+PickerModel.prototype.size = function() {
+	return this.values.length;
+};
+PickerModel.prototype.peek = function(key) {
+	return this.values[key];
+};
+PickerModel.prototype.selectValue = function(value) {
+	if (this.value != value) {
+		this.value = value;
 		this.fireChange();
-	};
+	}
+};
+PickerModel.prototype.select = function(key) {
+	if (this.value != this.values[key]) {
+			this.value = this.values[key];
+			this.fireChange();
+	}
+};
+PickerModel.prototype.deselect = function() {
+	this.value = this.defaultValue;
+	this.fireChange();
+};
 
-	/* every model need these functions */
-
-	this.register= function(rules) {
-		this.rules = rules;
-	};
-
-	this.fireChange = function () {
-		this.rules.change(this.id, this.value);
-	};
+PickerModel.prototype.register = function(rules) {
+	this.rules = rules;
+};
+PickerModel.prototype.fireChange = function () {
+	this.rules.change(this.id, this.internalValue);
 };
