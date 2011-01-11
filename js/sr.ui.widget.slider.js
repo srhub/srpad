@@ -38,32 +38,69 @@ function Slider(paper, model, properties) {
 	this.sliderStops.attr({
 		fill: properties["strokeColor"]
 	});
-
-	var start = function() {
-		this.attr({
-			fill: properties["strokeColor"]
-		});
+	var isDrag = false;
+	var dragger = function (e)
+	{
+		this.dx = e.clientX;
+		isDrag = this;
 	};
-	var move = function(dx, dy) {
-		tx = Math.signum(dx) * 3;
-		if (tx < 0 && (this.attrs.path[0][1] - tx) < this.minX) {
-			tx = this.minX - (this.attrs.path[0][1] - tx);
-		} else if (tx > 0 && (this.attrs.path[0][1] + tx) > this.maxX) {
-			tx = (this.attrs.path[0][1] + tx) - this.maxX;
-		} else {
-			this.translate(tx, 0);
-			this.tipText.translate(tx, 0);
+	
+	document.onmousedown = function () {
+		if(isDrag)	{
+			isDrag.attr({fill: "#ddd"});	
+		}
+	};
+	
+	document.onmousemove = function (e) {
+		e = e || event;
+		if (isDrag) {
+			
+			var bbox = isDrag.getBBox();
+			var x = e.clientX; // where did the user click
+			var priorX = isDrag.dx; // where was the draggable's x position before
+			var a = bbox.x; // where is the outer left point of the box
+			var w = bbox.width; // the width of the box
+			var minX = isDrag.minX; // the outer left edge of the slider
+			var maxX = isDrag.maxX; // the outer right edge of the slider
+			var tx; // the x distance i want to traverse
+						
+			if ( (a + w/2) <= minX ) {
+				// block movement to left
+				if (x <= isDrag.dx) {
+					return;
+				}
+			} else if ( (a + w/2) >= maxX) {
+				// block movement to right
+				if (x >= isDrag.dx) {
+					return;
+				}
+			}
+			
+			// handle overshoots due too quick movement
+			if ((a + w/2) - tx < minX ) {
+				tx = (a + w/2) - minX;
+				x = minX;
+			} else if ((a + w/2) + tx > maxX) {
+				tx = (a + w/2) - maxX;
+				x = maxX;
+			}
+			
+			tx = x - isDrag.dx;
 
+			var value = Math.floor(1 / isDrag.sliderScale() * (isDrag.attrs.path[0][1] - minX));
+			model.set(value);
+			isDrag.tipText.attr('text', value);
+			isDrag.translate(tx, 0);
+			isDrag.tipText.translate(tx, 0);
+			isDrag.dx = x;
 		};
-
-		value = Math.floor(1 / this.sliderScale() * (this.attrs.path[0][1] - this.minX));
-		model.set(value);
-		this.tipText.attr('text', value);
 	};
-	var up = function() {
-		this.attr({
-			fill: properties["backgroundColor"]
-		});
+
+	document.onmouseup = function () {
+		if(isDrag) {
+			isDrag.attr({fill:properties["backgroundColor"]});
+		}
+		isDrag = false;
 	};
 
 	// intitial tip
@@ -83,7 +120,7 @@ function Slider(paper, model, properties) {
 	});
 	this.tip.tipText = this.tipText;
 	
-	this.tip.drag(move, start, up);
+	this.tip.mousedown(dragger);
 
 
 	this.draw = function() {
