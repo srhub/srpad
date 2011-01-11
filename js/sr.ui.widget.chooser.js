@@ -1,8 +1,9 @@
-function Chooser(paper, model, weaponTypes, slider, properties) {
+function Chooser(paper, model, weaponTypes, strengthModel, slider, properties) {
 
 	this.paper = paper;
 	this.model = model;
 	this.weaponTypes = weaponTypes;
+	this.strengthModel = strengthModel;
 	this.slider = slider;
 
 	this.open = false;
@@ -80,14 +81,41 @@ function Chooser(paper, model, weaponTypes, slider, properties) {
 
 	};
 	
-	this.change = function (weaponTypeId) {
+	this.recalc = function() {
+		console.log("asdasds");
+		this.change(this.model.value, true);
+	}
+	
+	this.change = function (weaponTypeId, recalc) {
 		this.model.selectValue(weaponTypeId);	
 		var weaponType = weaponTypes.filterByField("id", weaponTypeId)[0];
+		if (weaponType.type == "projectile") {
+			console.log("sfsdf");
+			console.log(weaponType.modifier);
+				
+			for (i = 0, size = weaponType.stops.length; i < size; i++) {
+				weaponType.stops[i] = weaponType.stops[i] / weaponType.modifier;
+			}
+			
+			weaponType.modifier = strengthModel.value;
+			
+			for (i = 0, size = weaponType.stops.length; i < size; i++) {
+				weaponType.stops[i] = weaponType.stops[i] * weaponType.modifier;
+			}
+				console.log(weaponType);
+			console.log(weaponType.modifier);
+		}
 		this.slider.model.stops = weaponType.stops;
 		this.slider.model.maximumValue = weaponType.stops.max();
 		this.slider.model.mapping = WeaponType.prototype.getTargetNumber.bind(weaponType);
-		this.slider.draw();
-		this.draw();
+		
+		if (recalc != undefined) {
+			this.slider.draw();
+		} else {
+			this.slider.draw();
+			this.draw();
+		}
+	
 	};
 	
 };

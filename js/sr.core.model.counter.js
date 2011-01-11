@@ -7,28 +7,22 @@ function CounterModel (id, defaultValue, minValue, maxValue) {
 	
 	this.value = defaultValue;
 
-	this.next = function() {
-		if (this.value < this.maxValue) {
-			this.value++;
-			this.fireChange();
-		};	
+};
+CounterModel.prototype.next = function() {
+	if (this.value < this.maxValue) {
+		this.value++;
+		this.fireChange();
 	};
-
-	this.previous = function() {
-		if (this.value > this.minValue) {
-			this.value--;
-			this.fireChange();
-		};
+};
+CounterModel.prototype.previous = function() {
+	if (this.value > this.minValue) {
+		this.value--;
+		this.fireChange();
 	};
-	
-	/* every model need these functions */
-	
-	this.register= function(rules) {
-		this.rules = rules;
-	};
-	
-	this.fireChange = function () {
-		this.rules.change(this.id, this.value);
-	};
-
-}
+};
+CounterModel.prototype.register = function(rules) {
+	this.rules = rules;
+};
+CounterModel.prototype.fireChange = function () {
+	this.rules.change(this.id, this.internalValue);
+};

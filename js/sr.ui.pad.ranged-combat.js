@@ -283,25 +283,45 @@ function RangedCombat (paper, rules, weaponTypes) {
 		var weaponTypeModel = new PickerModel("weapontype", defaultWeapon.id, weaponTypes.extract("id"));
 		this.rules.register(weaponTypeModel);
 
+		// strength modifier
+		paper.text(265, 359, "Strength Minimum").attr(modifierTextAttribute);
+		var strengthModel = new CounterModel ("strength", 5, 1, 12);
+		this.rules.register(strengthModel);
+		var strengthCounter = new Counter (paper, strengthModel, {x: 265, y:367});
+		strengthCounter.draw();
+		
+
+
 		var groups = {};
 		groups["Firearms"] = weaponTypes.filterByField("type", "firearm").extract("id");
 		groups["Heavy Weapons"] = weaponTypes.filterByField("type", "heavy").extract("id");
 		groups["Impact Projectiles"] = weaponTypes.filterByField("type", "projectile").extract("id");
 
 		var idToNameMapping = weaponTypes.map("id", "name");
-		var weaponTypeChooser = new TextgroupChooser(paper, weaponTypeModel, {"valueTitles": idToNameMapping, "groups": groups});
 		var weaponTypeProperties = {
 			x: 265, y: 265,
 			"valuePaths": weaponTypes.map("id","picture"),
 			"valueTitles": idToNameMapping,
-			"chooser": weaponTypeChooser
+			"chooser": new TextgroupChooser(paper, weaponTypeModel, {"valueTitles": idToNameMapping, "groups": groups})
 		 };
-		new Chooser(paper, weaponTypeModel, weaponTypes, rangeSlider, weaponTypeProperties).draw();
+		var weaponTypeChooser = new Chooser(paper, weaponTypeModel, weaponTypes, strengthModel, rangeSlider, weaponTypeProperties);
+		weaponTypeChooser.draw();
 
-		// strength modifier
-		paper.text(265, 359, "Strength Minimum").attr(modifierTextAttribute);
-		var strengthModel = new CounterModel ("strength", 6, 1, 12);
-		this.rules.register(strengthModel);
-		new Counter (paper, strengthModel, {x: 265, y:367}).draw();
+		// dirty dirty dirty hack
+		strengthCounter.weaponTypeChooser = weaponTypeChooser;
+		strengthCounter.model.next = function() {
+			if (this.value < this.maxValue) {
+				this.value++;
+				this.fireChange();
+			};
+			weaponTypeChooser.recalc();
+		};
+		strengthCounter.model.previous = function() {
+			if (this.value > this.minValue) {
+				this.value--;
+				this.fireChange();
+			};
+			weaponTypeChooser.recalc();
+		};
 	};
 }
