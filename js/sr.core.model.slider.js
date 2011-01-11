@@ -23,6 +23,17 @@ function SliderModel (id, defaultValue, minimumValue, maximumValue, step, stops,
 	};
 		
 };
+SliderModel.prototype.register = function(value) {
+	// set the value
+	this.value = value;
+	
+	// check if internal value changed
+	var newInternalValue = this.mapping(value);
+	if (this.internalValue != newInternalValue) {
+		this.internalValue = newInternalValue;
+		this.fireChange();
+	}
+};
 SliderModel.prototype.register = function(rules) {
 	this.rules = rules;
 };
