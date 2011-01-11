@@ -82,7 +82,6 @@ function Chooser(paper, model, weaponTypes, strengthModel, slider, properties) {
 	};
 	
 	this.recalc = function() {
-		console.log("asdasds");
 		this.change(this.model.value, true);
 	}
 	
@@ -90,8 +89,6 @@ function Chooser(paper, model, weaponTypes, strengthModel, slider, properties) {
 		this.model.selectValue(weaponTypeId);	
 		var weaponType = weaponTypes.filterByField("id", weaponTypeId)[0];
 		if (weaponType.type == "projectile") {
-			console.log("sfsdf");
-			console.log(weaponType.modifier);
 				
 			for (i = 0, size = weaponType.stops.length; i < size; i++) {
 				weaponType.stops[i] = weaponType.stops[i] / weaponType.modifier;
@@ -102,8 +99,6 @@ function Chooser(paper, model, weaponTypes, strengthModel, slider, properties) {
 			for (i = 0, size = weaponType.stops.length; i < size; i++) {
 				weaponType.stops[i] = weaponType.stops[i] * weaponType.modifier;
 			}
-				console.log(weaponType);
-			console.log(weaponType.modifier);
 		}
 		this.slider.model.stops = weaponType.stops;
 		this.slider.model.maximumValue = weaponType.stops.max();
