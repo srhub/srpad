@@ -16,7 +16,7 @@ function RulesUI(properties, weaponTypes) {
 		this.deleteAllChildren(this.properties["modifiersId"]);
 		this.deleteAllChildren(this.properties["resultId"]);
 	
-		var weaponName =  this.weaponTypes.filterByField("id", this.calculationObject.weaponType)[0].name;
+		var weaponName =  _.select(this.weaponTypes, function(type){return type['id']==this.calculationObject.weaponType;}, this)[0].name;
 		this.setBase(document.getElementById(this.properties["baseId"]), weaponName, this.calculationObject.baseTarget);
 
 		var modifiersTag = document.getElementById(this.properties["modifiersId"]);

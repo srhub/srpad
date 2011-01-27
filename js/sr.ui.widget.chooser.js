@@ -49,18 +49,18 @@ function Chooser(paper, model, weaponTypes, strengthModel, slider, properties) {
 			"stroke-width": properties["strokeThickness"]
 		});
 
+		var selectedWeapon = _.select(weaponTypes, function(type){return type['id']==selectedId;})[0];
 		var weapon = paper.image(
-			weaponTypes.filterByField("id", selectedId)[0]["picture"],
+			selectedWeapon["picture"],
 			properties["x"],
 			properties["y"],
 			properties["imageWidth"],
 			properties["imageHeight"]
 		);
-
 		paper.text(
 			properties["x"] + properties["boxWidth"] - properties["textXOffset"],
 			properties["y"] + properties["boxHeight"] - properties["textYOffset"],
-			weaponTypes.filterByField("id", selectedId)[0]["name"]
+			selectedWeapon["name"]
 		).attr({
 			"text-anchor": "end",
 			font: properties["fontStyle"],
@@ -83,11 +83,12 @@ function Chooser(paper, model, weaponTypes, strengthModel, slider, properties) {
 	
 	this.recalc = function() {
 		this.change(this.model.value, true);
-	}
+	};
 	
 	this.change = function (weaponTypeId, recalc) {
 		this.model.selectValue(weaponTypeId);	
-		var weaponType = weaponTypes.filterByField("id", weaponTypeId)[0];
+		
+		var weaponType = _.select(weaponTypes, function(type){return type['id']==weaponTypeId;})[0];
 		if (weaponType.type == "projectile") {
 				
 			for (i = 0, size = weaponType.stops.length; i < size; i++) {
@@ -101,8 +102,8 @@ function Chooser(paper, model, weaponTypes, strengthModel, slider, properties) {
 			}
 		}
 		this.slider.model.stops = weaponType.stops;
-		this.slider.model.maximumValue = weaponType.stops.max();
-		this.slider.model.mapping = WeaponType.prototype.getTargetNumber.bind(weaponType);
+		this.slider.model.maximumValue = _.max(weaponType.stops);
+		this.slider.model.mapping = _.bind(WeaponType.prototype.getTargetNumber, weaponType);
 		
 		if (recalc != undefined) {
 			this.slider.draw();

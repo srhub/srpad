@@ -271,16 +271,17 @@ function RangedCombat (paper, rules, weaponTypes) {
 			width: 200
 		};
 
-		var defaultWeapon = weaponTypes.filterByField("id", "heavy.pistol")[0];
+		var defaultWeapon = _.select(weaponTypes, function(type){return type['id'] == "heavy.pistol";})[0];
 		var defaultWeaponRanges = defaultWeapon.stops;
-		var mapping = WeaponType.prototype.getTargetNumber.bind(defaultWeapon);
+		
+		var mapping = _.bind(WeaponType.prototype.getTargetNumber, defaultWeapon);
 
 		var sliderModel = new SliderModel("range", 4, 0, defaultWeaponRanges[defaultWeaponRanges.length-1], 5, defaultWeaponRanges, mapping);
 		this.rules.register(sliderModel);
 		var rangeSlider = new Slider(paper, sliderModel, sliderProperties);
 		rangeSlider.draw();
 
-		var weaponTypeModel = new PickerModel("weapontype", defaultWeapon.id, weaponTypes.extract("id"));
+		var weaponTypeModel = new PickerModel("weapontype", defaultWeapon.id, _.pluck(weaponTypes, 'id'));
 		this.rules.register(weaponTypeModel);
 
 		// strength modifier
@@ -293,14 +294,24 @@ function RangedCombat (paper, rules, weaponTypes) {
 
 
 		var groups = {};
-		groups["Firearms"] = weaponTypes.filterByField("type", "firearm").extract("id");
-		groups["Heavy Weapons"] = weaponTypes.filterByField("type", "heavy").extract("id");
-		groups["Impact Projectiles"] = weaponTypes.filterByField("type", "projectile").extract("id");
+		groups["Firearms"] = _(weaponTypes).chain()
+			.select(function(type){return type['type']=="firearm";})
+			.map(function(type){return type['id'];})
+			.value();
+		groups["Heavy Weapons"] = 	_(weaponTypes).chain()
+				.select(function(type){return type['type']=="heavy";})
+				.map(function(type){return type['id'];})
+				.value();
+		groups["Impact Projectiles"] = _(weaponTypes).chain()
+					.select(function(type){return type['type']=="projectile";})
+					.map(function(type){return type['id'];})
+					.value();
 
-		var idToNameMapping = weaponTypes.map("id", "name");
+		var idToNameMapping = _.reduce(weaponTypes, function(memo, type) {memo[type['id']]=type['name'];return memo;}, []);
+		var idToPictureMapping = _.reduce(weaponTypes, function(memo, type) {memo[type['id']]=type['picture'];return memo;}, []);
 		var weaponTypeProperties = {
 			x: 265, y: 265,
-			"valuePaths": weaponTypes.map("id","picture"),
+			"valuePaths": idToPictureMapping,
 			"valueTitles": idToNameMapping,
 			"chooser": new TextgroupChooser(paper, weaponTypeModel, {"valueTitles": idToNameMapping, "groups": groups})
 		 };

@@ -113,8 +113,8 @@ function Slider(paper, model, properties) {
 	
 	this.tip.minX = this.properties["x"] + 2 * this.properties["radius"]; 
 	this.tip.maxX = this.properties["x"] + this.sliderScale()*this.model["maximumValue"];
-	this.tip.sliderScale = this.sliderScale.bind(this);
-	
+	this.tip.sliderScale = _.bind(this.sliderScale, this);
+
 	this.tipText = paper.text(this.properties["x"], this.properties["y"] - this.properties["triangleHeight"] - this.properties["boxHeight"] / 2, this.model.value).attr({
 		font: this.properties["fontStyle"]
 	});
@@ -145,7 +145,7 @@ function Slider(paper, model, properties) {
 		this.tip.maxX = this.properties["x"] + this.sliderScale()*this.model["maximumValue"];
 		
 		// reset to highest value
-		if (this.model.value > this.model.stops.max()) {
+		if (this.model.value > _.max(this.model.stops)) {
 			this.model.set(this.model.stops.max());
 			this.tipText.attr('text', this.model.value);
 		}
